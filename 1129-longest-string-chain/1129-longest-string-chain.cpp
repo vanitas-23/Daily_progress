@@ -14,7 +14,7 @@ public:
        mx=max(dfs(it),mx);
        return dp[i]=ans+mx;
     }
-unordered_set<string> gen(string s) {
+    unordered_set<string> gen(string s) {
     unordered_set<string> result;
 
     for (int i = 0; i < s.length(); i++) {
@@ -25,7 +25,8 @@ unordered_set<string> gen(string s) {
     return result;
 }
     int longestStrChain(vector<string>& words) {
-       
+       ios_base::sync_with_stdio(false);
+       cin.tie(NULL);
         int mx=0;
         for(auto i:words){
             mx=max(mx,(int)i.size());
