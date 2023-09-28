@@ -12,7 +12,7 @@ public:
            mx--;
            mx=max(mx,nums[i]);
         
-           if(mx<1 && i!=n-1)
+           if(mx==0 && i!=n-1)
            return false;
        }
        return true;
