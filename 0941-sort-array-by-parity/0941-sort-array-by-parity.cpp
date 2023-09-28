@@ -1,19 +1,24 @@
 class Solution {
 public:
     vector<int> sortArrayByParity(vector<int>& nums) {
-        int l=0;
-        int n=nums.size();
-        int j=n-1;
-        vector<int>res(n);
-        for(int i:nums){
-            if(i%2)
-            {
-                res[j]=i;j--;
+        int n = nums.size();
+        int l = 0, r = n-1;
+        while(l<r){
+            if(nums[l]%2>nums[r]%2){
+                int tmp = nums[l];
+                nums[l] = nums[r];
+                nums[r] = tmp;
             }
-            else{
-                res[l]=i;l++;
+
+            if(nums[l]%2==0){
+                l++;
+            }
+                
+            if(nums[r]%2==1){
+                r--;
             }
         }
-        return res;
+        return nums;
+        
     }
 };
