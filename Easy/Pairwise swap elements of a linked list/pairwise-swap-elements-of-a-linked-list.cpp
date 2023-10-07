@@ -38,18 +38,16 @@ class Solution
     public:
     Node* pairWiseSwap(struct Node* head) 
     {
-        // The task is to complete this method
-         if(head==nullptr)
+    
+         if(head==nullptr || head->next==nullptr)
             return head;
-        ListNode* first=head;
+       
+         ListNode* first=head;
         ListNode* second=head->next;
-        if(second==nullptr){
-            first->next=second;return first;
-        }
-        else{
+        
             first->next=pairWiseSwap(second->next);
             second->next=first;
-        }
+        
         return second;
     }
 };
