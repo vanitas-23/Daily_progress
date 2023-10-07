@@ -1,32 +1,44 @@
 class Solution {
 public:
-
-    int mod = 1e9+7;
-    int helper(int i, int n, int m, int k,vector<vector<vector<int>>> &dp){
-        if(n<=0){
-            if(k==0) return 1;
+    vector<vector<vector<int>>> memo;
+    int MOD = 1e9 + 7;
+    int n;
+    int m;
+    
+    int numOfArrays(int n, int m, int k) {
+        memo = vector(n, vector(m + 1, vector(k + 1, -1)));
+        this->n = n;
+        this->m = m;
+        return dp(0, 0, k);
+    }
+    
+    int dp(int i, int maxSoFar, int remain) {
+        if (i == n) {
+            if (remain == 0) {
+                return 1;
+            }
+            
             return 0;
         }
-
-        if(dp[i][n][k]!=-1) return dp[i][n][k];
+        
+        if (remain < 0) {
+            return 0;
+        }
+        
+        if (memo[i][maxSoFar][remain] != -1) {
+            return memo[i][maxSoFar][remain];
+        }
+        
         int ans = 0;
-        for(int j=1;j<=m;j++){
-            if(j>i){
-                if(n>=1 && k>=1){
-                    ans=(ans+helper(j,n-1,m,k-1,dp))%mod;
-                }
-            }else{
-                if(n>=1){
-                    ans=(ans+helper(i,n-1,m,k,dp))%mod;
-                }
-            }
+        for (int num = 1; num <= maxSoFar; num++) {
+            ans = (ans + dp(i + 1, maxSoFar, remain)) % MOD;
         }
 
-
-        return dp[i][n][k] = ans%mod;
-    }
-    int numOfArrays(int n, int m, int k) {
-        vector<vector<vector<int>>> dp(m+1,vector<vector<int>>(n+1,vector<int>(k+1,-1)));
-        return helper(0,n,m,k,dp);
+        for (int num = maxSoFar + 1; num <= m; num++) {
+            ans = (ans + dp(i + 1, num, remain - 1)) % MOD;
+        }
+        
+        memo[i][maxSoFar][remain] = ans;
+        return ans;
     }
 };
