@@ -1,17 +1,29 @@
 class Solution {
 public:
-    vector<int> fullBloomFlowers(vector<vector<int>>& flowers, vector<int>& persons) {
-        vector<int> start, end;
-        for (auto& t : flowers)
-            start.push_back(t[0]), end.push_back(t[1]);
-        sort(start.begin(), start.end());
-        sort(end.begin(), end.end());
-        vector<int> res;
-        for (int t : persons) {
-            int started = upper_bound(start.begin(), start.end(), t) - start.begin();
-            int ended = lower_bound(end.begin(), end.end(), t) - end.begin();
-            res.push_back(started - ended);
+    vector<int> fullBloomFlowers(vector<vector<int>>& flowers, vector<int>& people) {
+        map<int, int> difference;
+        difference[0] = 0;
+        
+        for (vector<int>& flower : flowers) {
+            difference[flower[0]]++;
+            difference[flower[1] + 1]--;
         }
-        return res;
+        
+        vector<int> positions;
+        vector<int> prefix;
+        int curr = 0;
+        for (auto& pair : difference) {
+            positions.push_back(pair.first);
+            curr += pair.second;
+            prefix.push_back(curr);
+        }
+        
+        vector<int> ans;
+        for (int person : people) {
+            int i = upper_bound(positions.begin(), positions.end(), person) - positions.begin() - 1;
+            ans.push_back(prefix[i]);
+        }
+        
+        return ans;
     }
 };
