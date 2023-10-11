@@ -112,13 +112,12 @@ class Solution{
     
     bool isBalanced(Node *root)
     {
-        //  Your Code here
         if(!root)
         return 1;
-        bool b=false;
-        if(abs(height(root->left)-height(root->right))<2)
-        b= true;
-        return b& isBalanced(root->left) & isBalanced(root->right);
+        
+        if(abs(height(root->left)-height(root->right))>=2)
+        return false;
+        return isBalanced(root->left) & isBalanced(root->right);
     }
 };
 
