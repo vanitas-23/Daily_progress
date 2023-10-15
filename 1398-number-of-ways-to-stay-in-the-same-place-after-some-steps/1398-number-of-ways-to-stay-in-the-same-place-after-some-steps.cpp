@@ -12,11 +12,9 @@ int m=1e9+7;
         if(dp[steps][pos]!=-1)
         return dp[steps][pos];
         return dp[steps][pos]=(f(steps-1,arrLen,pos,dp)*1LL%m+f(steps-1,arrLen,pos+1,dp)%m+          f(steps-1,arrLen,pos-1,dp)%m)%m;
-
-
     }
     int numWays(int steps, int arrLen) {
-        vector<vector<int>>dp(steps+1,vector<int>(steps+1,-1));
+        vector<vector<int>>dp(steps+1,vector<int>(min(steps,arrLen)+1,-1));
         return f(steps,arrLen,0,dp);
     }
 };
