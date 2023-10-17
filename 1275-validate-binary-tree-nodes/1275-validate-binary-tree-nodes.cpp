@@ -41,9 +41,6 @@ public:
                     return false;
             }
         }
-        for(int i:vis)
-        if(!i)
-        return false;
-        return true;
+        return accumulate(vis.begin(),vis.end(),0)==n;
     }
 };
