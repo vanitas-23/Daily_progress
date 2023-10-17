@@ -14,10 +14,6 @@ public:
             }
            
         }
-        for(auto i:adj)
-        if(i.size()>2)
-        return false;
-       
         int z=accumulate(val.begin(),val.end(),0);
         if(z!=1)
         return false;
