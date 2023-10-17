@@ -1,42 +1,80 @@
+static const int _ = [](){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    return 0;
+}();
+
+class UnionFindSet {
+    public:
+        UnionFindSet(int n) : _parent(n), _size(n) {
+            for (int i=0; i<n; i++) {
+                _parent[i] = i;
+                _size[i] = 1;
+            }
+        }
+        bool Union(int x, int y) {
+            int rootX = Find(x);
+            int rootY = Find(y);
+            if(rootX==rootY)
+                return true;
+            if(rootX != rootY){
+                if(_size[rootY]>_size[rootX]){
+                    _parent[rootX] = rootY;
+                }
+                else if(_size[rootY]<_size[rootX]){
+                    _parent[rootY] = rootX;
+                }
+                else{
+                    _parent[rootX] = rootY;
+                    _size[rootY]++;
+                }
+            }
+            return false;
+        }
+        int Find(int x) {
+            if (_parent[x] == x) {
+                return x;
+            }
+            return _parent[x] = Find(_parent[x]);
+        }
+        vector<int> getParent(){
+            return _parent;
+        }
+    private:
+        vector<int> _parent;
+        vector<int> _size;
+};
+
 class Solution {
 public:
-    bool validateBinaryTreeNodes(int n, vector<int>& l, vector<int>& r) {
-        vector<int>adj[n];
-        vector<int>val(n,1);
-        for(int i=0;i<n;i++){
-            if(l[i]!=-1){
-                adj[i].push_back(l[i]);
-                val[l[i]]=0;
-            }
-            if(r[i]!=-1){
-                 adj[i].push_back(r[i]);
-                 val[r[i]]=0;
-            }
-           
-        }
-        int z=accumulate(val.begin(),val.end(),0);
-        if(z!=1)
-        return false;
-        int parent=-1;
-        for(int i=0;i<n;i++)
-        if(val[i]==1)
-        parent=i;
+    bool validateBinaryTreeNodes(int n, vector<int>& lc, vector<int>& rc) {
         
-        queue<int>q;
-        vector<int>vis(n,0);
-        q.push(parent);
-        vis[parent]=1;
-        while(!q.empty()){
-            int it=q.front();q.pop();
-            for(int x:adj[it]){
-                if(!vis[x]){
-                    q.push(x);
-                    vis[x]=1;
-                }   
-                else
+        vector<int> indegree(n, 0);
+        UnionFindSet ufs(n);
+        for(int i = 0; i < n; i++){
+            if(lc[i]!=-1){
+                indegree[lc[i]]++;
+                if(indegree[lc[i]]>1 || ufs.Union(i, lc[i]))
+                    return false;
+            }
+            if(rc[i]!=-1){
+                indegree[rc[i]]++;
+                if(indegree[rc[i]]>1 || ufs.Union(i, rc[i]))
                     return false;
             }
         }
-        return accumulate(vis.begin(),vis.end(),0)==n;
+        
+        vector<int> parent = ufs.getParent();
+        int dif = 0, pre = -1;
+        for(auto p : parent){
+            //cout << p << " ";
+            if(ufs.Find(p)!=pre){
+                dif++;
+                pre = p;
+            }
+        }
+        //cout << endl;
+        return dif==1;
     }
 };
