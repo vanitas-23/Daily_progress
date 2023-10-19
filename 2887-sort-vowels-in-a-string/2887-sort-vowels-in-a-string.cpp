@@ -1,21 +1,16 @@
 class Solution {
 public:
+    bool isVowel(char ch){
+        return ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' ||
+            ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U';
+    }
     string sortVowels(string s) {
-        unordered_set<char>st;
+        
         vector<int>loc;
         vector<char>ele;
-        st.insert('a');
-        st.insert('e');
-        st.insert('i');
-        st.insert('o');
-        st.insert('u');
-        st.insert('A');
-        st.insert('E');
-        st.insert('I');
-        st.insert('O');
-        st.insert('U');
+        
         for(int i=0;i<s.size();i++)
-        if(st.find(s[i])!=st.end()){
+        if(isVowel(s[i])){
             ele.push_back(s[i]);
             loc.push_back(i);
         }
