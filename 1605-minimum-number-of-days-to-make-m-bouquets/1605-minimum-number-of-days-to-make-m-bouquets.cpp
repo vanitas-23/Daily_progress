@@ -20,8 +20,9 @@ public:
     }
     int minDays(vector<int>& bloomDay, int m, int k) {
         int l=1;
-        int h=1e9+7;
-        int ans=1e9+7;
+        int h=*max_element(bloomDay.begin(),bloomDay.end());
+        int ans=-1;
+        
         while(l<=h){
             int mid=h-(h-l)/2;
             if(can(bloomDay,m,k,mid))
@@ -32,6 +33,6 @@ public:
             else
             l=mid+1;
         }
-        return ans==1e9+7?-1:ans;
+        return ans;
     }
 };
