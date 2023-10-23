@@ -1,11 +1,7 @@
 class Solution {
 public:
     bool isPowerOfFour(int n) {
-        if(n<0)
-        return 0;
-        int x=ffs(n);
-
-        
-        return (x%2) && __builtin_popcount(n)==1;
+        int mask = 0x55555555;
+        return n > 0 && (n & (n - 1)) == 0 && (n & mask) == n;
     }
 };
