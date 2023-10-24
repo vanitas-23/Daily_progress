@@ -10,7 +10,6 @@ using namespace std;
 class Solution{
 public:
      bool isPalin(string &s,int i,int j){
-    
         while(i<j){
             if(s[i]!=s[j]){
                 return false;
@@ -20,7 +19,6 @@ public:
         return true;
     }
     int solve(string &str,int i,int j,vector<vector<int>>&dp){
-        
         if(i==j || isPalin(str,i,j)){return 0;}
         if(dp[i][j]!=-1)return dp[i][j];
         int ans = INT_MAX;
@@ -37,8 +35,9 @@ public:
     }
     int palindromicPartition(string str)
     {
-        vector<vector<int>>dp(str.size()+1,vector<int>(str.size()+1,-1));
-        return solve(str,0,str.size()-1,dp);
+        int n=str.size();
+        vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
+        return solve(str,0,n-1,dp);
     }
 };
 
