@@ -1,30 +1,27 @@
 class Solution {
-private: 
-    bool check(string &s, int i, int j){
-        while(i<j){
-            if(s[i] != s[j])
-                return false;
-            
-            i++;
-            j--;
-        }
-        return true;
-    }            
 public:
-    string longestPalindrome(string s) {
-        int n = s.size();
-        int starting_index = 0;
-        int max_len = 0;
-        for(int i=0; i<n; i++){
-            for(int j=i; j<n; j++){
-                if(check(s, i, j)){
-                    if(j-i+1 > max_len){
-                        max_len = j-i+1;
-                        starting_index = i;
-                    }
-                }
+    string longestPalindrome(std::string s) {
+        string T = "^#";
+        for (char c : s) {
+            T += c;
+            T += '#';
+        }
+        T += "$";
+        int n = T.size();
+        vector<int> P(n, 0);
+        int C = 0, R = 0;
+        for (int i = 1; i < n-1; ++i) {
+            P[i] = (R > i) ? min(R - i, P[2*C - i]) : 0;
+            while (T[i + 1 + P[i]] == T[i - 1 - P[i]])
+                P[i]++;
+
+            if (i + P[i] > R) {
+                C = i;
+                R = i + P[i];
             }
         }
-        return s.substr(starting_index, max_len);
+        int max_len = *max_element(P.begin(), P.end());
+        int center_index = distance(P.begin(),find(P.begin(), P.end(), max_len));
+        return s.substr((center_index - max_len) / 2, max_len);
     }
-}; 
+};
