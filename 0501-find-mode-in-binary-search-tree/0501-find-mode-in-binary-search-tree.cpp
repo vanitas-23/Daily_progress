@@ -10,27 +10,42 @@
  * };
  */
 class Solution {
+
+private:
+    int last = INT_MIN;
+    int count = 0;
+    int max = 0;
+    std::vector<int> modes;
+
+    void traverse(TreeNode* node) {
+
+        if (!node) return;
+
+        traverse(node->left);
+
+        if (last == node->val) 
+            count++;
+         else 
+            count = 1;
+        
+
+        if (count > max) {
+            max = count;
+            modes.clear();
+            modes.push_back(node->val);}
+          else if (count == max) 
+            modes.push_back(node->val);
+
+        last = node->val;
+
+        traverse(node->right);
+
+    
+        }
+
 public:
     vector<int> findMode(TreeNode* root) {
-        unordered_map<int,int>mp;
-        queue<TreeNode*>q;
-        vector<int>res;
-        q.push(root);
-        while(!q.empty()){
-            auto it=q.front();
-            q.pop();
-            mp[it->val]++;
-            if(it->left)
-            q.push(it->left);
-            if(it->right)
-            q.push(it->right);
-        }
-        int mx=0;
-        for(auto i:mp)
-        mx=max(mx,i.second);
-        for(auto i:mp)
-        if(i.second==mx)
-        res.push_back(i.first);
-        return res;
+        traverse(root);
+        return modes;
     }
 };
