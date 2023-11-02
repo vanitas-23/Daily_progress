@@ -1,18 +1,26 @@
 class Solution {
 public:
     vector<vector<int>> findWinners(vector<vector<int>>& matches) {
-        map<int,int>mp;
-        for(auto i:matches){
-        mp[i[1]]++;
-        mp[i[0]]+=0;}
+                array<bool, 100001> played = {};
+        array<int, 100001> losses = {};
+        
+        for (const vector<int>& match : matches) {
+            played[match[0]] = true;
+            played[match[1]] = true;
+            ++losses[match[1]];
+        }
+        
+        vector<vector<int>> ans(2);
 
-        vector<vector<int>>res(2);
-        for(auto i:mp){
-        if(i.second==0)
-        res[0].push_back(i.first);
-        else if(i.second==1)
-        res[1].push_back(i.first);
-    }
-        return res;
-    }
+        for (int i = 0; i < size(played); ++i) {
+            if (played[i]) {
+                if (losses[i] == 0) {
+                    ans[0].push_back(i);
+                } else if (losses[i] == 1) {
+                    ans[1].push_back(i);
+                }  
+            }
+        }    
+        return ans; 
+    }    
 };
