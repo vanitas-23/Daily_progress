@@ -1,25 +1,29 @@
 class Solution {
 public:
-    typedef long long ll;
-    pair<ll, ll> dfs(vector<vector<int>> &tree, vector<int>& values, int node, int parent){
-        ll leftout = 0, taken = 0;
-        for(auto c : tree[node]){
-            if(c != parent) {
-                auto [t, l] = dfs(tree, values, c, node);
-                taken += t; leftout += l;
-            }
+    vector<vector<int>> adj;
+    long long solve(int node,int parent,vector<int>& values){
+        if(adj[node].size()==1 && node!=0)
+            return values[node];
+        long long sum = 0;
+        for(auto it : adj[node]){
+            if(it==parent)
+                continue;
+            sum += solve(it,node,values);
         }
-        taken += (leftout != 0)?max(leftout, (ll)values[node]): 0;
-        leftout = (leftout != 0)?min(leftout, (ll)values[node]): values[node];  
-        //cout<<"node : "<<node<< " => "<<"taken : " <<taken<<", "<<"leftout : "<<leftout<<endl;  //Uncomment this line to see how the taken and leftout are changing 
-        return {taken, leftout};
+        return min(sum,1LL*values[node]);
     }
     long long maximumScoreAfterOperations(vector<vector<int>>& edges, vector<int>& values) {
-        vector<vector<int>> tree(values.size());
-        for(auto e: edges){                  //create a grph from the edgegs given
-            tree[e[0]].push_back(e[1]);
-            tree[e[1]].push_back(e[0]);
+        int n = values.size();
+        adj.resize(n);
+        for(auto it : edges){
+            adj[it[0]].push_back(it[1]);
+            adj[it[1]].push_back(it[0]);
         }
-        return dfs(tree, values, 0, -1).first;
+        long long ans = 0;
+        for(int i=0;i<n;i++)
+            ans += values[i];
+        long long x = solve(0,-1,values);
+        
+        return ans-x;
     }
 };
