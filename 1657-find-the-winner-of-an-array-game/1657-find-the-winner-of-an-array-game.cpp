@@ -1,12 +1,7 @@
 class Solution {
 public:
     int getWinner(vector<int>& arr, int k) {
-        if (k == 1) 
-            return max(arr[0], arr[1]);
-        if (k >= arr.size()) 
-            return *max_element(arr.begin(), arr.end());
-        
-        vector<int>d(arr.begin(),arr.end());
+       
         stack<int>st;
         int n=arr.size();
         int c=0;
@@ -20,14 +15,14 @@ public:
             if(c==mx && mx!=0)
             ans=st.top(),mx=c;
             if(st.empty())
-            st.push(d[i]);
+            st.push(arr[i]);
             else {
-                if(st.top()>d[i])
+                if(st.top()>arr[i])
                 c++;
                 else{
                     
                     st.pop();
-                    st.push(d[i]);
+                    st.push(arr[i]);
                     c=1;
                 }
             }
