@@ -1,29 +1,28 @@
 class Solution {
 public:
     vector<vector<int>> adj;
-    long long solve(int node,int parent,vector<int>& values){
-        if(adj[node].size()==1 && node!=0)
-            return values[node];
-        long long sum = 0;
-        for(auto it : adj[node]){
-            if(it==parent)
-                continue;
-            sum += solve(it,node,values);
+    
+    const long long INF = 1e18+10;
+    long long dfs(int c, int p, const vector<int>& a) {
+        long long ans = a[c] ? a[c] : INF;
+        long long x = 0; bool b = 0;
+        for (int nxt : adj[c]) if (nxt != p) {
+            x += dfs(nxt, c, a);
+            b = 1;
         }
-        return min(sum,1LL*values[node]);
+        if (!b) return ans;
+        return min(ans, x);
     }
     long long maximumScoreAfterOperations(vector<vector<int>>& edges, vector<int>& values) {
         int n = values.size();
-        adj.resize(n);
-        for(auto it : edges){
-            adj[it[0]].push_back(it[1]);
-            adj[it[1]].push_back(it[0]);
+        adj.clear(); adj.resize(n);
+        for (auto v : edges) {
+            int a = v[0], b = v[1];
+            adj[a].push_back(b), adj[b].push_back(a);
         }
-        long long ans = 0;
-        for(int i=0;i<n;i++)
-            ans += values[i];
-        long long x = solve(0,-1,values);
         
-        return ans-x;
+        long long ans = accumulate(values.begin(),values.end(),0LL);
+        
+        return ans - dfs(0, -1, values);
     }
 };
