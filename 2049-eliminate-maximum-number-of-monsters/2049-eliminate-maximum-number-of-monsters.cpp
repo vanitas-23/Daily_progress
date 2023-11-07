@@ -1,21 +1,28 @@
 class Solution {
 public:
     int eliminateMaximum(vector<int>& dist, vector<int>& speed) {
-        priority_queue<int,vector<int>,greater<int>>q;
-        
-        int n=dist.size();
-        for(int i=0;i<n;i++)
-        q.push(ceil(1.0*dist[i]/speed[i]));
-        int cnt=0;
-        int k=0;
-        while(!q.empty()){
-            auto x=q.top();
-            q.pop();
-            if(cnt>=x)
-            return cnt;
-            cnt++;
-            k++;
-        }
-        return cnt;
+
+ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+    
+    float time[dist.size()];
+
+    for(int i=0; i<dist.size(); i++)
+    {
+        time[i] = float(dist[i]) / speed[i];
     }
+
+    sort(time,time+dist.size());
+    int counter = 0;
+    int c = 0;
+    for(int i=0; i<dist.size(); i++)
+    {   
+        if(time[i] - c > 0)
+        {counter++; c++;}
+        else
+        {return counter;}
+    }
+
+    return counter;
+
+}
 };
