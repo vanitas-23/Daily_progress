@@ -1,29 +1,39 @@
 class Solution {
 public:
-    set<vector<int>>res;
-    void f(int target,vector<int>& candidates,vector<int> temp){
-        if(target==0){
-            sort(temp.begin(),temp.end());
-            res.insert(temp);
+
+    vector<vector<int>> ans;
+
+    void solve(vector<int> &candidates, int target, int sum, int indx, vector<int> &temp){
+
+        if(sum == target){
+            ans.push_back(temp);
+            return;
         }
 
-        for(int i=0;i<candidates.size();i++){
-            vector<int>pre=temp;
-            if(candidates[i]<=target){
-                temp.push_back(candidates[i]);
-                f(target-candidates[i],candidates,temp);
-                temp=pre;
-            }
+        int n = candidates.size();
+
+        if(sum > target)  return;
+
+        for(int i = indx; i < n; i++ ){
+            temp.push_back(candidates[i]);
+            solve(candidates, target, sum + candidates[i], i, temp);
+            temp.pop_back();
         }
-      //  f(target,candidates,temp);
+
     }
-    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<int>temp;
-        f(target,candidates,temp);
 
-        vector<vector<int>> ans;
-        for(auto i:res)
-        ans.push_back(i);
+    
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+
+        vector<int> temp;
+
+        sort(candidates.begin(),candidates.end());
+
+        solve(candidates, target, 0, 0, temp);
+
         return ans;
+
+        
     }
 };
