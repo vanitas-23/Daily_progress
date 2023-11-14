@@ -1,17 +1,22 @@
+#define ll long long 
 class Solution {
 public:
     vector<long long> minOperations(vector<int>& nums, vector<int>& queries) {
-        long long n = nums.size();
-        sort(nums.begin(), nums.end());
-        vector<long long> ps(n + 1), ss(n + 1), ans;
-        for(int i=1; i<=n; i++) ps[i]  = ps[i - 1] + nums[i  - 1];
-        for(int i=n-1; i>=0; i--) ss[i] = ss[i + 1] + nums[i];
-        
-        for(int q : queries) {
-            long long pos = lower_bound(nums.begin(), nums.end(), q) - nums.begin();
-            long long val = pos * q  - ps[pos] + ss[pos] - (n - pos) * q;
-            ans.push_back(val);
+        vector<ll> v;//ans array
+        vector<ll> ps;//previous sum array
+        sort(nums.begin(),nums.end());
+        ll sum = 0,s;
+        for(auto &i: nums){sum += i;ps.push_back(sum);}
+        int x = 0,n=nums.size();
+        for(auto &i: queries){
+            x = upper_bound(nums.begin(),nums.end(),i)-nums.begin();//binary search
+            if(x==0)
+                v.push_back((sum-n*1LL*i));
+            else if(x==n)
+                v.push_back((x*1LL*i - ps[x-1]));
+            else
+                v.push_back((x*1LL*i - ps[x-1]) + (sum-ps[x-1]-i*1LL*(n-x)));
         }
-        return ans;
+        return v;
     }
 };
