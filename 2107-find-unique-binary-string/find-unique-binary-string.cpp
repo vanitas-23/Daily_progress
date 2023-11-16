@@ -5,9 +5,9 @@ public:
         unordered_set<unsigned long>st;
 
         for(auto i:nums)
-        {
+        
            st.insert(stoi(i,0,2));
-        }
+        
         
         for(int i=1;i<(2<<n);i++)
         if(st.find(i)==st.end())
@@ -24,10 +24,6 @@ public:
  }
  return binary;
         }
-
-
-        for(auto i:st)
-        cout<<i<<" ";
-        return "j";
+ return "-1";
     }
 };
