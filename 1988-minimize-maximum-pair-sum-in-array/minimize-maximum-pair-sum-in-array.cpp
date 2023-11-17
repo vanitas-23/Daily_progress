@@ -5,11 +5,10 @@ public:
         int ans=0;
         int i=0;
         int j=nums.size()-1;
-        while(i<j){
-            ans=max(ans,nums[j]+nums[i]);
-            i++;
-            j--;
-        }
+        while(i<j)
+            ans=max(ans,nums[j--]+nums[i++]);
+            
+        
         return ans;
     }
 };
