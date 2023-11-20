@@ -1,51 +1,24 @@
 class Solution {
 public:
-    int garbageCollection(vector<string>& garbage, vector<int>& travel) {
-        int ans=0;
-        unordered_map<int,int>P;
-        unordered_map<int,int>G;
-        unordered_map<int,int>M;
-        int n=garbage.size();
-        int Pc=0,Gc=0,Mc=0;
-        for(int i=0;i<n;i++){
-            for(char c:garbage[i]){
+    int garbageCollection(vector<string>& grb, vector<int>& travel) {
+        int time=grb[0].size();
+        int m=0,g=0,p=0,sum=0;
+        for(int i=1;i<grb.size();i++){
+            sum+=travel[i-1];
+            for(char c:grb[i])
+            {
+                if(c=='M')
+                m=sum;
+                if(c=='G')
+                g=sum;
                 if(c=='P')
-                P[i]++,Pc++;
-                else if(c=='G')
-                G[i]++,Gc++;
-                else M[i]++,Mc++;
+                p=sum;
+             time++;
             }
-        }
-        //Paper
-        
 
-        for(int i=0;i<n;i++){
-            if(Pc<=0)
-            break;
-            if(i==0)
-            ans+=P[i];
-            else ans+=P[i],ans+=travel[i-1];
-            
-            Pc-=P[i];
+           
         }
-        for(int i=0;i<n;i++){
-            if(Mc<=0)
-            break;
-            if(i==0)
-            ans+=M[i];
-            else ans+=M[i],ans+=travel[i-1];
-            
-            Mc-=M[i];
-        }
-        for(int i=0;i<n;i++){
-            if(Gc<=0)
-            break;
-            if(i==0)
-            ans+=G[i];
-            else ans+=G[i],ans+=travel[i-1];
-            
-            Gc-=G[i];
-        }
-        return ans;
+        time+=(m+p+g);
+        return time;
     }
 };
