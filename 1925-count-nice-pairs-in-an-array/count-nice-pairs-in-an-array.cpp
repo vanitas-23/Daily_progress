@@ -1,14 +1,21 @@
 class Solution {
 public:
+int rev(int num) {
+        int result = 0;
+        while (num > 0) {
+            result = result * 10 + num % 10;
+            num /= 10;
+        }
+        
+        return result;
+    }
     int mod=1e9+7;
     int countNicePairs(vector<int>& nums) {
         vector<int>arr=nums;
         int n=nums.size();
-        for(int i=0;i<n;i++){
-            string s=to_string(arr[i]);
-            reverse(s.begin(),s.end());
-            arr[i]=stoi(s);
-        }
+        for(int i=0;i<n;i++)
+            arr[i]=rev(nums[i]);
+        
         for(int i=0;i<n;i++)
         arr[i]-=nums[i];
       //  cout<<n<<" ";
