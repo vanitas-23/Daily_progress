@@ -1,18 +1,21 @@
 class Solution {
 public:
     int partitionString(string s) {
-        int feq[26] = {0};
-        int ch, n = s.length();
-        int l, r, part = 1;
-        for(l = r = 0; r < n; r++) {
-            ch = s[r] - 'a';
-            feq[ch]++;
-            if(feq[ch] > 1) {
-                part++;
-                while(l < r)
-                    feq[s[l++] - 'a']--;
+        vector<int>freq(26);
+        int i=0;
+        int j=0;
+        int n=s.size();
+        int ans=0;
+        while(j<n){
+            freq[s[j]-'a']++;
+            if(freq[s[j]-'a']>1)
+            {
+                ans++;
+                while(i<j)
+                freq[s[i++]-'a']--;
             }
+            j++;
         }
-        return part;     
+        return ans+1;
     }
 };
