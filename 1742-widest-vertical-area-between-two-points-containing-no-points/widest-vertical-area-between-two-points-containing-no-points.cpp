@@ -1,19 +1,18 @@
 class Solution {
 public:
     int maxWidthOfVerticalArea(vector<vector<int>>& points) {
-        set<int>st;
-        
+        priority_queue<int>pq;
         for(auto i:points)
-        st.insert(i[0]);
+        pq.push(i[0]);
 
-        vector<int>pts(st.begin(),st.end());
+        int curr=pq.top();
+        pq.pop();
         int ans=0;
-        for(int i=1;i<pts.size();i++)
-        ans=max(ans,pts[i]-pts[i-1]);
-
+        while(pq.size()){
+            ans=max(ans,curr-pq.top());
+            curr=pq.top();
+            pq.pop();
+        }
         return ans;
-
-        
-        
     }
 };
