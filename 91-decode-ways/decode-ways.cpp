@@ -15,8 +15,6 @@ public:
                 else if(s[i]=='2' && s[i+1]<='6')
                 a2=f(i+2,n,s,dp);
         }
-    
-
         return dp[i]=a1+a2;
     }
         int numDecodings(string s) {
