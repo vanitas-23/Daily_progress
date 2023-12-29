@@ -1,42 +1,48 @@
-
-struct Tree {
-	typedef long long T;
-	static constexpr T unit = INT_MIN;
-	T f(T a, T b) { return max(a, b); } // (any associative fn)
-	vector<T> s; int n;
-	Tree(int n = 0, T def = unit) : s(2*n, def), n(n) {}
-	void update(int pos, T val) {
-		for (s[pos += n] = val; pos /= 2;)
-			s[pos] = f(s[pos * 2], s[pos * 2 + 1]);
-	}
-	T query(int b, int e) { // query [b, e)
-		T ra = unit, rb = unit;
-		for (b += n, e += n; b < e; b /= 2, e /= 2) {
-			if (b % 2) ra = f(ra, s[b++]);
-			if (e % 2) rb = f(s[--e], rb);
-		}
-		return f(ra, rb);
-	}
-};
 class Solution {
 public:
-    
-    int f(vector<int>& j, int d,int i,int n,Tree& t,int pre,vector<vector<int>>& dp){
-        if(i == n && d == 0) return 0;
-        if(i == n || d == 0) return 1e9;
-        if(dp[d][pre+1]!=-1)
-        return dp[d][pre+1];
-        int ntaken=t.query(pre+1,i+1)+f(j,d-1,i+1,n,t,i,dp);
-        int taken=f(j,d,i+1,n,t,pre,dp);
-
-        return dp[d][pre+1]=min(ntaken,taken);
+    int minDifficulty(vector<int>& jobDifficulty, int d) {
+        int len = jobDifficulty.size();
+        if (len < d) {
+            return -1;
+        }
+        int sum = accumulate(jobDifficulty.begin(), jobDifficulty.end(), 0);
+        if (sum == 0) {
+            return 0;
+        }
+        vector<vector<int>> memo(d + 1, vector<int>(len, 0));
+        helper(jobDifficulty, d, 0, memo);
+        
+        return memo[d][0];
     }
-    int minDifficulty(vector<int>& j, int d) {
-        int n=j.size();
-        Tree t(n,0);
-        for(int i=0;i<n;i++)
-        t.update(i,j[i]);
-        vector<vector<int>>dp(d+1,vector<int>(n+1,-1));
-        return f(j,d,0,n,t,-1,dp)>=1e9?-1:f(j,d,0,n,t,-1,dp);
+
+private:
+    void helper(vector<int>& jd, int daysLeft, int idx, vector<vector<int>>& memo) {
+        int len = jd.size();
+        if (memo[daysLeft][idx] != 0) {
+            return;
+        }
+        if (daysLeft == 1) {
+            int num = 0;
+            for (int i = idx; i < len; i++) {
+                num = max(num, jd[i]);
+            }
+            memo[daysLeft][idx] = num;
+            return;
+        }
+        int maxDifficulty = jd[idx];
+        daysLeft--;
+        int stop = len - idx - daysLeft + 1;
+
+        int res = INT_MAX;
+        for (int i = 1; i < stop; i++) {
+            maxDifficulty = max(maxDifficulty, jd[idx + i - 1]);
+            int other = memo[daysLeft][idx + i];
+            if (other == 0) {
+                helper(jd, daysLeft, idx + i, memo);
+                other = memo[daysLeft][idx + i];
+            }
+            res = min(res, other + maxDifficulty);   
+        }
+        memo[daysLeft + 1][idx] = res;
     }
 };
