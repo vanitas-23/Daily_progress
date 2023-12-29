@@ -22,8 +22,8 @@ class Solution {
 public:
     
     int f(vector<int>& j, int d,int i,int n,Tree& t,int pre,vector<vector<vector<int>>>& dp){
-       if(i == n && d == 0) return 0;
-        if(i == n || d == 0 || n < d+i) return 1e9;
+        if(i == n && d == 0) return 0;
+        if(i == n || d == 0) return 1e9;
         if(dp[i][d][pre+1]!=-1)
         return dp[i][d][pre+1];
         int ntaken=t.query(pre+1,i+1)+f(j,d-1,i+1,n,t,i,dp);
