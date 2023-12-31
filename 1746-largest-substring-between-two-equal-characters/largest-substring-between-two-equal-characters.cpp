@@ -1,22 +1,17 @@
 class Solution {
 public:
     int maxLengthBetweenEqualCharacters(string s) {
-        vector<vector<int>> v(26,vector<int>(2,-1));
-        for(int i=0;i<s.size();i++){
-            if(v[s[i]-'a'][0]==-1){
-                v[s[i]-'a'][0]=i;
-            }
+        vector<int>mp(26,-1);
+        int ans=-1;
+        int n=s.size();
+        for(int i=0;i<n;i++){
+            if(mp[s[i]-'a']==-1)
+            mp[s[i]-'a']=i;
+
+            else
+            ans=max(ans,i-mp[s[i]-'a']+1);
         }
-        for(int i=s.size()-1;i>=0;i--){
-            if(v[s[i]-'a'][1]==-1){
-                v[s[i]-'a'][1]=i;
-            }
-        }
-        int mx=-1;
-        for(int i=0;i<26;i++){
-            if(v[i][1]!=-1 && v[i][0]!=-1){
-            mx=max(mx,v[i][1]-v[i][0]-1);}
-        }
-        return mx;
+
+        return ans==-1?-1:ans-2;
     }
 };
