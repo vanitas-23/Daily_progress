@@ -1,6 +1,11 @@
 class Solution {
+    
 public:
     vector<vector<int>> findMatrix(vector<int>& nums) {
+        ios::sync_with_stdio(false);
+        cin.tie(0);
+   // cout << fixed << setprecision(12);
+ 
         unordered_map<int,int>mp;
         for(int i:nums)
         mp[i]++;
