@@ -1,21 +1,23 @@
 class Solution {
 public:
     int numberOfBeams(vector<string>& bank) {
-        vector<int>arr;
+        int curr=0;
+        int prev=0;
+        int res=0;
         for(auto i:bank){
             int cnt=0;
             for(char c:i)
             if(c=='1')
             cnt++;
-            if(cnt>0)
-            arr.push_back(cnt);
+            if(cnt==0)
+            continue;
+            if(curr==0){
+            curr=cnt;continue;}
+            prev=curr;
+            curr=cnt;
+            res+=curr*prev;
         }
-        if(arr.size()<2)
-        return 0;
-        int res=0;
-        for(int i=1;i<arr.size();i++)
-        res+=arr[i]*arr[i-1];
-
+        
         return res;
 
     }
