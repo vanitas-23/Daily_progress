@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/minimum-number-of-operations-to-make-array-empty">3094. Minimum Number of Operations to Make Array Empty</a></h2><h3>Medium</h3><hr><p>You are given a <strong>0-indexed</strong> array <code>nums</code> consisting of positive integers.</p>
+<h2><a href="https://leetcode.com/problems/minimum-number-of-operations-to-make-array-empty">Minimum Number of Operations to Make Array Empty</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' /><hr><p>You are given a <strong>0-indexed</strong> array <code>nums</code> consisting of positive integers.</p>
 
 <p>There are two types of operations that you can apply on the array <strong>any</strong> number of times:</p>
 
