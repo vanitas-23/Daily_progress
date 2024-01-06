@@ -5,7 +5,7 @@ public:
         return 0;
         if(dp[i]!=-1)
         return dp[i];
-    int taken=profit[i]+f(st,et,profit,lower_bound(st.begin(),st.end(),et[i])-st.begin(),n,dp);
+    int taken=profit[i]+f(st,et,profit,lower_bound(st.begin()+i,st.end(),et[i])-st.begin(),n,dp);
     int ntaken=f(st,et,profit,i+1,n,dp);
 
     return dp[i]=max(taken,ntaken);
