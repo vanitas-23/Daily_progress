@@ -17,7 +17,7 @@ public:
                 return 1;
         } 
         if(abs(c-e)==abs(d-f)){
-           // cout<<"hi"<<" ";
+           
             if(abs(c-a)==abs(d-b) && (e-a)*(a-c)>0 && (f-b)*(b-d)>0)
             {
                 rk=2;
