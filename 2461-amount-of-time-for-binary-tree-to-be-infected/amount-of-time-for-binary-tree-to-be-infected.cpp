@@ -1,50 +1,35 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+
 class Solution {
+private:
+    int maxDistance = 0;
+
 public:
-   
     int amountOfTime(TreeNode* root, int start) {
-        unordered_map<int,vector<int>>mp;
-        using Node=TreeNode;
-        queue<Node*>q;
-        q.push(root);
-        while(!q.empty()){
-            auto it=q.front();q.pop();
-            if(it->left){
-                mp[it->val].push_back(it->left->val);
-                mp[it->left->val].push_back(it->val);
-                q.push(it->left);
-            }
-            if(it->right){
-                mp[it->val].push_back(it->right->val);
-                mp[it->right->val].push_back(it->val);
-                q.push(it->right);
-            }
-        }
-        queue<pair<int,int>>pq;
-        pq.push({start,0});
-       
-        int steps=0;
-        unordered_map<int,int>xp;
-        while(!pq.empty()){
-             int x=pq.front().first;
-            steps=pq.front().second;
-             pq.pop();
-             xp[x]=1;
-             for(int i:mp[x]){
-                 if(xp.find(i)==xp.end())
-                 pq.push({i,steps+1});
-             }
-        }
-        return steps;
+        traverse(root, start);
+        return maxDistance;
     }
-};
+
+    int traverse(TreeNode* root, int start) {
+        int depth = 0;
+        if (root == nullptr) 
+            return depth;
+        
+
+        int leftDepth = traverse(root->left, start);
+        int rightDepth = traverse(root->right, start);
+
+        if (root->val == start) {
+            maxDistance = max(leftDepth, rightDepth);
+            depth = -1;
+        } else if (leftDepth >= 0 && rightDepth >= 0) {
+            depth = max(leftDepth, rightDepth) + 1;
+        } else {
+            int distance = abs(leftDepth) + abs(rightDepth);
+            maxDistance = max(maxDistance, distance);
+            depth = min(leftDepth, rightDepth) - 1;
+        }
+
+        return depth;
+    }
+}; 
+
