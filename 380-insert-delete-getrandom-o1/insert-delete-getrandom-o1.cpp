@@ -1,6 +1,6 @@
 class RandomizedSet {
 public:
-    set<int>st;
+    unordered_set<int>st;
     RandomizedSet() {
         
     }
