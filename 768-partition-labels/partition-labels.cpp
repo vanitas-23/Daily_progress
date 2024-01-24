@@ -15,7 +15,7 @@ public:
             if(frq[l-'a']>0)
             {
                 b=0;
-                continue;
+                break;
             }
             if(!b)
             continue;
