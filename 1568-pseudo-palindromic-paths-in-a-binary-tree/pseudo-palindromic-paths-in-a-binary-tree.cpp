@@ -11,24 +11,25 @@
  */
 class Solution {
 public:
-    void f(TreeNode* root,int& res,vector<int>x)
+    void f(TreeNode* root,int& res,int& arr)
     {
         if(!root)
         return ;
-        x[root->val]=!x[root->val];
+        
+        arr=arr^(1<<(root->val));
+        
         if(!root->left && !root->right)
         {
-            int sm=accumulate(x.begin(),x.end(),0);
-            if(sm<2)
+            if((arr&(arr-1))== 0)
             res++;
-            return;
         }
-        f(root->left,res,x);
-        f(root->right,res,x);
+        f(root->left,res,arr);
+        f(root->right,res,arr);
+        arr=arr^(1<<(root->val));
     }
     int pseudoPalindromicPaths (TreeNode* root) {
         int res=0;
-        vector<int>arr(10);
+        int arr=0;
         f(root,res,arr);
 
         return res;
