@@ -1,20 +1,7 @@
 class Solution {
 public:
-    string digits="123456789";
-    void f(vector<int>& res,int sz)
-    {
-       for(int i=0;i<=9-sz;i++)
-       {
-           string temp=digits.substr(i,sz);
-           res.push_back(stoi(temp));
-       }
-    }
     vector<int> sequentialDigits(int low, int high) {
-        string l=to_string(low);
-        string h=to_string(high);
-        vector<int>res;
-        for(int i=l.size();i<=h.size();i++)
-        f(res,i);
+        vector<int>res={12, 23, 34, 45, 56, 67, 78, 89, 123, 234, 345, 456, 567, 678, 789, 1234, 2345, 3456, 4567, 5678, 6789, 12345, 23456, 34567, 45678, 56789, 123456, 234567, 345678, 456789, 1234567, 2345678, 3456789, 12345678, 23456789, 123456789};
         auto it1=lower_bound(res.begin(),res.end(),low);
         auto it2=lower_bound(res.begin(),res.end(),high);
         vector<int>ans;
@@ -27,6 +14,6 @@ public:
         if(*it2==high)
         ans.push_back(high);
         return ans;
-        //return res;
+        
     }
 };
