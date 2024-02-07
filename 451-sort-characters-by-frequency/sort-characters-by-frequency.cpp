@@ -11,9 +11,9 @@ public:
         for(auto a : mp)
             r[a.second]+=a.first;
 
-        for (auto [f, chars] : r) {
+        for (auto [f, chars] : r) 
             for (auto c : chars) ss.append(f, c);
-        }
+        
         return ss;
     }
 };
