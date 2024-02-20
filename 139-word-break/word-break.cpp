@@ -10,11 +10,11 @@ public:
             return dp[i][j];
 
         string temp = A.substr(i, j - i + 1);
-        if (mp[temp])
-            return dp[i][j] =
-                       (f(j + 1, j + 1, n, A, dp) | f(i, j + 1, n, A, dp));
+        int np=0;
+    if (mp[temp])
+         np = f(j + 1, j + 1, n, A, dp);
 
-        return dp[i][j] = f(i, j + 1, n, A, dp);
+    return dp[i][j] = np | f(i, j + 1, n, A, dp);
     }
     bool wordBreak(string A, vector<string>& B) {
         for (auto i : B)
