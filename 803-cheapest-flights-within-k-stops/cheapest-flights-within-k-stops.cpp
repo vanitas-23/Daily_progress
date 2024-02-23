@@ -8,7 +8,7 @@ public:
             adj[it[0]].push_back({it[1] , it[2]});
         }
 
-        queue<pair<int, pair<int, int>>>q;  //{stops, {node, cost}}
+        queue<pair<int, pair<int, int>>>q;
         q.push({0, {src, 0}});
 
         vector<int>dist(n, 1e9);
