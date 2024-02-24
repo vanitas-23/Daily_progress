@@ -1,50 +1,45 @@
-
 class Solution {
 public:
-    vector<int> findAllPeople(int n, vector<vector<int>>& meetings, int firstPerson) {
-        vector<bool> can(n);  
-        can[0] = can[firstPerson] = true;
-
-        map<int, vector<pair<int, int>>> mp; 
-
-       
-        for (auto& meeting : meetings) 
-            mp[meeting[2]].emplace_back(meeting[0], meeting[1]); 
-
-       
-        for (auto& [k, v] : mp) {
-            unordered_map<int, vector<int>> graph;
-            unordered_set<int> st; 
-           
-            for (auto& [x, y] : v) {
-                graph[x].push_back(y); 
-                graph[y].push_back(x); 
-                if (can[x]) st.insert(x); 
-                if (can[y]) st.insert(y); 
-            }
-
-            queue<int> q; 
-
-            
-            for (auto& x : st) q.push(x); 
-            
-            
-            while (q.size()) {
-                auto x = q.front(); q.pop(); 
-                for (auto& y : graph[x]) 
-                    if (!can[y]) {
-                        can[y] = true; 
-                        q.push(y); 
-                    }
-            }
-        }
+    void dfs(vector<pair<int,int>>temp,vector<int>& vis,int n)
+    {
         
-        vector<int> ans; 
+    }
+    vector<int> findAllPeople(int n, vector<vector<int>>& meetings, int firstPerson) {
+        map<int,vector<pair<int,int>>>mp;
+        for(auto i:meetings)
+        mp[i[2]].push_back({i[0],i[1]});
 
-       
-        for (int i = 0; i < n; ++i) 
-            if (can[i]) ans.push_back(i); 
+        vector<int>vis(n);
+        vis[0]=1;
+        vis[firstPerson]=1;
 
-        return ans; 
+        for(auto it:mp)
+        {
+        unordered_map<int,vector<int>>adj;
+        unordered_set<int>st;
+         auto temp=it.second;
+        for(auto i:temp){
+        adj[i.first].push_back(i.second),adj[i.second].push_back(i.first);
+        if(vis[i.first]) st.insert(i.first);
+        if(vis[i.second]) st.insert(i.second);
+        }
+        queue<int>q;
+        for(auto i:st)
+        q.push(i);
+        while(!q.empty())
+        {
+            auto x=q.front();
+            q.pop();
+            for(int i:adj[x])
+            if(!vis[i])
+            q.push(i),vis[i]=1;
+        }
+        }
+        vector<int>res;
+        for(int i=0;i<n;i++)
+        if(vis[i])
+        res.push_back(i);
+
+        return res;
     }
 };
