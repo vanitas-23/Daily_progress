@@ -15,22 +15,21 @@ public:
     int findBottomLeftValue(TreeNode* root) {
         queue<Node*>q;
         q.push(root);
-        int ans=root->val;
+       // int ans=root->val;
+       Node* x;
         while(!q.empty())
         {
             int n=q.size();
             for(int i=0;i<n;i++)
             {
-                auto x=q.front();
+                x=q.front();
                 q.pop();
-                if(i==0)
-                ans=x->val;
-                if(x->left)
-                q.push(x->left);
                 if(x->right)
                 q.push(x->right);
+                if(x->left)
+                q.push(x->left);
             }
         }
-        return ans;
+        return x->val;
     }
 };
