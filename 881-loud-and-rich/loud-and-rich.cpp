@@ -4,7 +4,7 @@ public:
     {
 
         vis[i]=1;
-        if(ans>=quiet[i])
+        if(ans>quiet[i])
         ele=i,ans=quiet[i];
         for(int x:arr[i])
         if(!vis[x])
