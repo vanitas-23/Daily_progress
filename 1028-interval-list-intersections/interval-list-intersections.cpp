@@ -7,7 +7,7 @@ public:
             int l=max(A[i][0], B[j][0]);
             int u=min(A[i][1], B[j][1]);
             if(l<=u) v.push_back({l,u});
-            if(A[i][1] < B[j][1])   i++;
+            if(A[i][1] <= B[j][1])   i++;
             else j++;
         }
         return v;
