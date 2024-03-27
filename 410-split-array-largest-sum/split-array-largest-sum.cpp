@@ -7,8 +7,7 @@ public:
         int curr=0;
         for(int i=0;i<n;i++)
         {
-            if(nums[i]>mid_sum)
-            return 0;
+            
             curr+=nums[i];
             if(curr>mid_sum)
             splits++,curr=nums[i];
@@ -18,7 +17,7 @@ public:
     }
     int splitArray(vector<int>& nums, int k) {
         int n=nums.size();
-        int l=0;
+        int l=*max_element(nums.begin(),nums.end());
         int h=1e9;
         int ans=0;
         while(l<=h)
