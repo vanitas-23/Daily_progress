@@ -27,7 +27,7 @@ public:
         }
         unordered_set<int>st(to_delete.begin(),to_delete.end());
         unordered_set<int>ress;
-        for(auto& i:mp)
+        for(auto i:mp)
         {
             if(st.find(i.first->val)!=st.end())
             {
@@ -36,13 +36,13 @@ public:
                 mp[i.first->left]=nullptr;
                 if(i.first->right)
                 mp[i.first->right]=nullptr;
-                auto& x = mp[i.first];
+                auto x = mp[i.first];
                 if(x==nullptr)
                 {
                     ress.insert(i.first->val);
                     continue;
                 }
-                cout<<x->val<<" ";
+               // cout<<x->val<<" ";
                 if(x->left==i.first)
                 x->left=nullptr;
                 if(x->right==i.first)
