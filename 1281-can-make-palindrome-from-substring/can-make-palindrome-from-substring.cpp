@@ -13,10 +13,7 @@ public:
             int snd=pre[x[1]];
             int ele=fst^snd;
             int cnt=__builtin_popcount(ele);
-            if(cnt/2<=x[2])
-            ans.push_back(true);
-            else
-            ans.push_back(false);
+            ans.push_back(cnt/2<=x[2]);
         }
         return ans;
     }
