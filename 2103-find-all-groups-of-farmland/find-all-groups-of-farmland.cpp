@@ -20,12 +20,6 @@ public:
             for(int x=i;x<r;x++)
             for(int y=j;y<c;y++)
             grid[x][y]=0;
-            // for(int i=0;i<n;i++)
-            // {
-            //     for(int j=0;j<m;j++)
-            //     cout<<grid[i][j]<<" ";
-            //     cout<<endl;
-            // }
         }
         return ans;
     }
