@@ -1,44 +1,49 @@
 class Solution {
 public:
-   
     vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
-    if (n == 1) return {0}; // Special case with only one node
-    vector<int> degree(n, 0);
-    vector<vector<int>> graph(n);
-    for (auto& edge : edges) {
-        graph[edge[0]].push_back(edge[1]);
-        graph[edge[1]].push_back(edge[0]);
-        degree[edge[0]]++;
-        degree[edge[1]]++;
-    }
-
-    queue<int> leafQueue;
-    for (int i = 0; i < n; i++) {
-        if (degree[i] == 1) leafQueue.push(i);
-    }
-
-    int remainingNodes = n;
-    while (remainingNodes > 2) {
-        int leafCount = leafQueue.size();
-        remainingNodes -= leafCount;
-        for (int i = 0; i < leafCount; i++) {
-            int leaf = leafQueue.front();
-            leafQueue.pop();
-            for (int neighbor : graph[leaf]) {
-                if (--degree[neighbor] == 1) {
-                    leafQueue.push(neighbor);
-                }
-            }
+        if(n==1)
+        return {0};
+        vector<int>res;
+        queue<int>q;
+        vector<int>adj[n+1];
+        vector<int>inD(n+1);
+        for(auto i:edges)
+        {
+            adj[i[0]].push_back(i[1]);
+            adj[i[1]].push_back(i[0]);
+            inD[i[0]]++;
+            inD[i[1]]++;
         }
-    }
+        for(int i=0;i<=n;i++)
+        if(inD[i]==1)
+        q.push(i);
 
-    vector<int> minHeightTrees;
-    while (!leafQueue.empty()) {
-        minHeightTrees.push_back(leafQueue.front());
-        leafQueue.pop();
-    }
-    return minHeightTrees;
-
-
+        while(n>2)
+        {
+            int sz=q.size();
+            //cout<<sz<<" ";
+            n-=sz;
+            while(sz>0)
+            {
+                int ele=q.front();
+                q.pop();
+               // cout<<ele<<" ";
+                for(auto i:adj[ele])
+                {
+                    inD[i]--;
+                    if(inD[i]==1)
+                    q.push(i);
+                }
+                sz--;
+            }
+            
+        }
+        while(!q.empty())
+        {
+            auto x=q.front();
+            q.pop();
+            res.push_back(x);
+        }
+        return res;
     }
 };
