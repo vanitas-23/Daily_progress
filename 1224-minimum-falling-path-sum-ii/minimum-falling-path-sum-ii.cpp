@@ -1,27 +1,30 @@
 class Solution {
 public:
-    int f(int i,int n,int m,vector<vector<int>>& grid,int lst,vector<vector<int>>& dp)
-    {
-        if(i==n)
-        return 0;
-        if(dp[i][lst]!=-1)
-        return dp[i][lst];
-        int ans=1e9;
-        for(int j=0;j<m;j++)
-        {
-            if(j==lst)
-            continue;
-            ans=min(ans,grid[i][j]+f(i+1,n,m,grid,j,dp));
-        }
-        return dp[i][lst]=ans;
-    }
     int minFallingPathSum(vector<vector<int>>& grid) {
-        int ans=1e9;
-        int n=grid.size();
-        int m=grid[0].size();
-        vector<vector<int>>dp(n,vector<int>(m,-1));
-        for(int i=0;i<m;i++)
-        ans=min(ans,grid[0][i]+f(1,n,m,grid,i,dp));
-        return ans;
+        int n = grid.size();
+        if (n == 1)
+            return grid[0][0];
+
+        vector<int> l(n);
+        vector<int> r(n);
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int d = INT_MAX;
+                if (j > 0) d = min(d, l[j - 1]);
+                if (j < n - 1) d = min(d, r[j + 1]);
+                grid[i][j] += d;
+            }
+
+            l[0] = grid[i][0];
+            for (int j = 1; j < n; j++)
+                l[j] = min(l[j - 1], grid[i][j]);
+
+            r[n - 1] = grid[i][n - 1];
+            for (int j = n - 2; j >= 0; j--)
+                r[j] = min(r[j + 1], grid[i][j]);
+        }
+
+        return l[n - 1];
     }
 };
