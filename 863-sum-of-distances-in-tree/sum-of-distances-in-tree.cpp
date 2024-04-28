@@ -1,49 +1,40 @@
 class Solution {
 public:
-    int countHelper(int index, vector<vector<int>>& adj, vector<int>& nodeCount, int parent) // count number of nodes under each node after fixing 0 as root
-    {
-        for(auto x : adj[index]) if(x != parent) nodeCount[index] += countHelper(x, adj, nodeCount, index);
-        return 1 + nodeCount[index];
+    int sum=0;
+    int helper(vector<int> adj[],int node,vector<int> &vis,vector<int> &numEdges,int dis){
+        int ret=0;
+        sum+=dis;
+        vis[node]=1;
+        for(auto a: adj[node]){
+            if(!vis[a]){
+                ret+=1+helper(adj,a,vis,numEdges,dis+1);
+                numEdges[node]=ret;
+            }
+        }
+        return ret;
     }
-    void dfs(vector<vector<int>>& adj, int node, int parent, int& total, int k)
-    {   // find sum of distance to each node and sum it
-        total += k;
-        for(auto i : adj[node])
-        {
-            if(i != parent)
-                dfs(adj, i, node, total, k+1);
+    void dfs(vector<int> adj[],int node,int n,vector<int>& numEdges,vector<int>& vis,vector<int>& res){
+        vis[node]=1;
+        for(auto a: adj[node]){
+            if(!vis[a]){
+                res[a]=res[node]-numEdges[a]+n-2-numEdges[a];
+                dfs(adj,a,n,numEdges,vis,res);
+            }
         }
     }
-    void helper(vector<int>& nodeCount, int index, vector<int>& result, int parent, vector<vector<int>>& adj, int n)
-    {
-        // calculate sum of distance from top to botom 
-        // using sum of node = sum of parent + (number of nodes under parent) - (nodes under child) - (nodes under child)
-        if(parent != -1)
-        {
-            int nodesUnderCild = 0;
-            for(auto x : adj[index]) if(x != parent) nodesUnderCild += nodeCount[x] + 1;
-            result[index] = result[parent] + (n - nodesUnderCild - 2) - nodesUnderCild;
-        }
-        
-        for(auto x : adj[index]) if(x != parent) helper(nodeCount, x, result, index, adj, n);
-    }
-
     vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& edges) {
-        vector<vector<int>> adj(n);
-        vector<int> nodeCount(n, 0), result(n, 0);
-        int total = 0;
-
-        for(auto i : edges)
-        {
-            adj[i[0]].push_back(i[1]);
-            adj[i[1]].push_back(i[0]);
+        vector<int> adj[n];
+        for(int i=0;i<edges.size();i++){
+            adj[edges[i][0]].push_back(edges[i][1]);
+            adj[edges[i][1]].push_back(edges[i][0]);
         }
-        countHelper(0, adj, nodeCount, -1);
-        dfs(adj, 0, -1, total, 0); // find sum of distance from node 0 to all nodes
-        result[0] = total;
-
-        helper(nodeCount, 0, result, -1, adj, n);
-
-        return result;
+        vector<int> numEdges(n,0);
+        vector<int> vis(n,0);
+        vector<int> res(n,0);
+        helper(adj,0,vis,numEdges,0);
+        res[0]=sum;
+        vector<int> vis1(n,0);
+        dfs(adj,0,n,numEdges,vis1,res);
+        return res;
     }
 };
