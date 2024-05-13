@@ -5,33 +5,35 @@ public:
         int m=grid[0].size();
         for(int i=0;i<n;i++)
         {
-            if(grid[i][0])
-            continue;
-            for(int j=0;j<m;j++)
-            grid[i][j]=!grid[i][j];
+            if(grid[i][0]==0)
+            {
+                for(int j=0;j<m;j++)
+                grid[i][j]=!grid[i][j];
+            }
         }
-        for(int j=0;j<m;j++)
+        for(int i=0;i<m;i++)
         {
-            int zer=0;
-            int on=0;
-            for(int i=0;i<n;i++)
-            if(grid[i][j])
-            on++;
-            else
-            zer++;
-            if(zer<on)
-            continue;
-            for(int i=0;i<n;i++)
-            grid[i][j]=!grid[i][j];
+            int one=0;
+            for(int j=0;j<n;j++)
+            one+=grid[j][i];
+            if(one<n-one)
+            for(int j=0;j<n;j++)
+            grid[j][i]=!grid[j][i];
         }
-        
         int ans=0;
         for(int i=0;i<n;i++)
         {
-            for(int j=0;j<m;j++)
-            if(grid[i][j])
-            ans+=(1<<(m-1-j));
+            int curr=0;
+            int x=0;
+            for(int j=m-1;j>=0;j--)
+            {
+                if(grid[i][j])
+                curr|=(1<<x);
+                x++;
+            }
+            ans+=curr;
         }
+        
         return ans;
     }
 };
