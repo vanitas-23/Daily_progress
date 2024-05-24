@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int f(int i,int n,vector<string>& words,vector<int> arr,vector<int>& score)
+    int f(int i,int n,vector<string>& words,vector<int>& arr,vector<int>& score)
     {
         if(i==n)
         return 0;
@@ -9,7 +9,7 @@ public:
         vector<int>temp=arr;
         for(char c:words[i])
         if(arr[c-'a']==0){
-        //cout<<c<<" "<<i<<endl;
+        arr=temp;
         return nt;}
         else
         arr[c-'a']--;
