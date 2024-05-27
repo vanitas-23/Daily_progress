@@ -3,8 +3,9 @@ public:
     int specialArray(vector<int>& nums) {
         sort(nums.begin(),nums.end());
         int l=0;
-        int r=1000;
+        
         int n=nums.size();
+        int r=n;
         while(l<=r)
         {
             int md=(l+r)/2;
