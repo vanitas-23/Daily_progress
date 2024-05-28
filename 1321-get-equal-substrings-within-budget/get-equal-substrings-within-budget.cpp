@@ -10,7 +10,7 @@ public:
         {
             curr+=abs(s[j]-t[j]);
             while(curr>maxCost)
-            curr-=abs(s[i]-t[i]),i++;
+            curr-=abs(s[i]-t[i++]);
             ans=max(ans,j-i+1);
             j++;
         }
