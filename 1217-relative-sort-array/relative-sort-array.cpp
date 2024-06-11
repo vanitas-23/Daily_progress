@@ -1,33 +1,22 @@
 class Solution {
 public:
     vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
-        int m=arr2.size();
-        sort(arr1.begin(),arr1.end());
+        int n=arr2.size();
+
         map<int,int>mp;
-        for(int i=0;i<m;i++)
-            mp[arr2[i]]=i+1;
-        auto cmp = [&mp](int a,int b){
+        for(int i=0;i<n;i++)
+        mp[arr2[i]]=i;
+
+        auto cmp=[&mp](int a,int b){
+            if(mp.find(a)!=mp.end() && mp.find(b)!=mp.end())
             return mp[a]<mp[b];
+            if(mp.find(a)!=mp.end())
+            return true;
+            if(mp.find(b)!=mp.end())
+            return false;
+            return a<b;
         };
-
-        
-      
-
-vector<int> org,temp;
-        for(int i:arr1){
-            if(mp.find(i)==mp.end())
-                temp.push_back(i);
-            else
-                org.push_back(i);
-        }
-
-
-       sort(org.begin(), org.end(), cmp);
-
-sort(temp.begin(),temp.end());
-        org.insert(org.end(),temp.begin(),temp.end());
-
-
-        return org;
+        sort(arr1.begin(),arr1.end(),cmp);
+        return arr1;
     }
 };
