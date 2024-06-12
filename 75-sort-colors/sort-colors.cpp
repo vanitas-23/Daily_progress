@@ -1,7 +1,7 @@
 class Solution {
 public:
     void sortColors(vector<int>& nums) {
-        const char red=0, white=1, blue=2;
+        const int red=0, white=1, blue=2;
         int l=0, m=0, r=nums.size()-1;
         while(m<=r){
             switch(nums[m]){
