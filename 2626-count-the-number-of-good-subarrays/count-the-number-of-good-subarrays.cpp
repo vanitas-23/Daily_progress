@@ -12,14 +12,12 @@ public:
         {
             temp+=mp[nums[j]];
             mp[nums[j]]++;
-            //cout<<temp<<" "<<i<<" "<<j<<endl;
-            while(temp>=k && i<j)
+            while(temp>=k && i<=j)
             {
                 ans+=(n-j);
                 ll prev=mp[nums[i]];
+                ll curr=prev-1;
                 mp[nums[i]]--;
-                ll curr=mp[nums[i]];
-
                 ll diff=prev*(prev-1)/2-curr*(curr-1)/2;
                 temp-=diff;
                 i++;
