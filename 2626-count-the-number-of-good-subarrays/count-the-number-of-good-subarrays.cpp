@@ -7,7 +7,7 @@ public:
         int n=nums.size();
         ll temp=0;
         ll ans=0;
-        map<int,int>mp;
+        unordered_map<int,int>mp;
         while(j<n)
         {
             temp+=mp[nums[j]];
