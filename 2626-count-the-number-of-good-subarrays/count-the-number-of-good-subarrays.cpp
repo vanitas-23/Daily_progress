@@ -12,7 +12,7 @@ public:
         {
             temp+=mp[nums[j]];
             mp[nums[j]]++;
-            cout<<temp<<" "<<i<<" "<<j<<endl;
+            //cout<<temp<<" "<<i<<" "<<j<<endl;
             while(temp>=k && i<j)
             {
                 ans+=(n-j);
