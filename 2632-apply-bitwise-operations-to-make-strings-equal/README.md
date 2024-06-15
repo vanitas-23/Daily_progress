@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/apply-bitwise-operations-to-make-strings-equal">2632. Apply Bitwise Operations to Make Strings Equal</a></h2><h3>Medium</h3><hr><p>You are given two <strong>0-indexed binary</strong> strings <code>s</code> and <code>target</code> of the same length <code>n</code>. You can do the following operation on <code>s</code> <strong>any</strong> number of times:</p>
+<h2><a href="https://leetcode.com/problems/apply-bitwise-operations-to-make-strings-equal">Apply Bitwise Operations to Make Strings Equal</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' /><hr><p>You are given two <strong>0-indexed binary</strong> strings <code>s</code> and <code>target</code> of the same length <code>n</code>. You can do the following operation on <code>s</code> <strong>any</strong> number of times:</p>
 
 <ul>
 	<li>Choose two <strong>different</strong> indices <code>i</code> and <code>j</code> where <code>0 &lt;= i, j &lt; n</code>.</li>
