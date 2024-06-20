@@ -1,20 +1,22 @@
 class Solution {
 public:
-    bool f(int mid,int n,vector<int>& pos,int m)
+    bool f(int mid,int n,vector<int>& position, int m)
     {
-        int cnt=1;
-        int i=0;
-        while(i<n)
+        int ball = 1;
+        int lastPos = position[0];
+
+        for(int i = 0; i<n; i++)
         {
-            i=lower_bound(pos.begin(),pos.end(),pos[i]+mid)-pos.begin();
-            //cout<<i<<" "<<mid<<endl;
-            if(i<n)
-            cnt++;
-            else
-            break;
+            if(position[i] - lastPos >= mid)
+            {
+                ball++;
+                if(ball==m)
+                    return true;
+                 lastPos = position[i];
+            }
         }
-        //cout<<endl;
-        return cnt>=m;
+
+        return false;
     }
     int maxDistance(vector<int>& pos, int m) {
         sort(pos.begin(),pos.end());
