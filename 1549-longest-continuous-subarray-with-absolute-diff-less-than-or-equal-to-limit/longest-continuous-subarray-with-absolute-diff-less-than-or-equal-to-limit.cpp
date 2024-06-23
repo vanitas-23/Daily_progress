@@ -9,15 +9,8 @@ public:
         while(j<n)
         {
             st.insert(nums[j]);
-            while(true)
-            {
-                int x=*st.begin();
-                auto it=st.end();
-                it--;
-                if(*it-x<=limit)
-                break;
+            while(*st.rbegin()-*st.begin()>limit)  
                 st.erase(st.lower_bound(nums[i++]));
-            }
             ans=max(ans,j-i+1);
             j++;
         }
