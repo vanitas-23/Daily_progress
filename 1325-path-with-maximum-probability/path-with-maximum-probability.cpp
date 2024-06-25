@@ -1,7 +1,7 @@
 class Solution {
 public:
     map<pair<int,int>,double>mp;
-    map<int,vector<int>>adj;
+    unordered_map<int,vector<int>>adj;
     double maxProbability(int n, vector<vector<int>>& ed, vector<double>& succ, int src, int dst) {
         int m=ed.size();
         for(int i=0;i<m;i++)
