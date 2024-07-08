@@ -1,20 +1,10 @@
 class Solution {
 public:
-    int findTheWinner(int n, int k) {
-        
-        queue<int> circle;
-        for (int i = 1; i <= n; i++) {
-            circle.push(i);
-        }
+    int findTheWinner(int n, int k) { return f(n, k) + 1; }
 
-        while (circle.size() > 1) {
-            for (int i = 0; i < k - 1; i++) {
-                circle.push(circle.front());
-                circle.pop();
-            }
-            circle.pop();
-        }
-
-        return circle.front();
+private:
+    int f(int n, int k) {
+        if (n == 1) return 0;
+        return (f(n - 1, k) + k) % n;
     }
 };
