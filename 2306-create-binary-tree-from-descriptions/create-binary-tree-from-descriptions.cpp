@@ -12,8 +12,8 @@
 class Solution {
 public:
     TreeNode* createBinaryTree(vector<vector<int>>& des) {
-        map<TreeNode*,TreeNode*>par;
-        map<int,TreeNode*>mp;
+        unordered_map<TreeNode*,TreeNode*>par;
+        unordered_map<int,TreeNode*>mp;
         for(auto i:des)
         {
             if(mp.find(i[0])==mp.end())
