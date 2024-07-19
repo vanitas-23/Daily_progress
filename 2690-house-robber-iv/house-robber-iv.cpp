@@ -11,11 +11,13 @@ public:
         ans=max(ans,1+f(i+2,n,nums,k,mid,dp));
         return dp[i]=ans;
     }
-    bool check(vector<int>& nums,int k,int mid,int n)
+    bool check(vector<int>& nums,int k,int x,int n)
     {
-        vector<int>dp(n,-1);
-        int mx=f(0,n,nums,k,mid,dp);
-        return mx>=k;
+        int cnt=0;
+        for(int i=0;i<n;i++){
+            if(nums[i]<=x)++cnt,++i;
+            }
+        return cnt>=k;
     }
     int minCapability(vector<int>& nums, int k) {
         int n=nums.size();
