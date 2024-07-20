@@ -16,7 +16,7 @@ public:
         for(auto i:queries)
         {
             auto it=lower_bound(nums.begin(),nums.end(),i)-nums.begin();
-            //cout<<it<<" ";
+
             ll ans = suf[it]-pre[it]+it*1ll*i-i*1ll*(n-it);
             
             res.push_back(ans);
