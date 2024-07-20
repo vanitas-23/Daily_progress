@@ -1,22 +1,26 @@
-#define ll long long 
+#define ll long long
 class Solution {
 public:
     vector<long long> minOperations(vector<int>& nums, vector<int>& queries) {
-        vector<ll> v;//ans array
-        vector<ll> ps;//previous sum array
+        vector<ll>res;
         sort(nums.begin(),nums.end());
-        ll sum = 0,s;
-        for(auto &i: nums){sum += i;ps.push_back(sum);}
-        int x = 0,n=nums.size();
-        for(auto &i: queries){
-            x = upper_bound(nums.begin(),nums.end(),i)-nums.begin();//binary search
-            if(x==0)
-                v.push_back((sum-n*1LL*i));
-            else if(x==n)
-                v.push_back((x*1LL*i - ps[x-1]));
-            else
-                v.push_back((x*1LL*i - ps[x-1]) + (sum-ps[x-1]-i*1LL*(n-x)));
+        int n=nums.size();
+        vector<ll>pre(n+1);
+        vector<ll>suf(n+1);
+        for(int i=0;i<n;i++)
+        pre[i+1]=pre[i]+nums[i];
+        for(int i=n-1;i>=0;i--)
+        suf[i]=suf[i+1]+nums[i];
+        for(int i=0;i<=n;i++)
+        cout<<pre[i]<<" "<<suf[i]<<endl;
+        for(auto i:queries)
+        {
+            auto it=lower_bound(nums.begin(),nums.end(),i)-nums.begin();
+            //cout<<it<<" ";
+            ll ans = suf[it]-pre[it]+it*1ll*i-i*1ll*(n-it);
+            
+            res.push_back(ans);
         }
-        return v;
+        return res;
     }
 };
