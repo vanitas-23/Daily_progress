@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> frequencySort(vector<int>& nums) {
-        map<int,int>mp;
+        unordered_map<int,int>mp;
         for(int i:nums)
         mp[i]++;
         auto cmp=[&mp](int a,int b){
