@@ -17,12 +17,14 @@ public:
         int ans=0;
         for(int i=1;i<=n;i++)
         {
+            if(i%9==0 || i%9==1){
             int x=i*i;
             string s=to_string(i*i);
             if(f(0,s.size(),s,i))
             {
                 // cout<<i<<" ";
                 ans+=x;
+            }
             }
         }
         return ans;
