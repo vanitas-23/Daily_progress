@@ -1,12 +1,12 @@
 class Solution {
 public:
 
-    set<vector<int>> ans;
+    vector<vector<int>>res;
 
     void solve(vector<int> &candidates, int target, int sum, int indx, vector<int> &temp){
 
         if(sum == target){
-            ans.insert(temp);
+            res.push_back(temp);
             return;
         }
 
@@ -33,9 +33,8 @@ public:
         sort(candidates.begin(),candidates.end());
 
         solve(candidates, target, 0, 0, temp);
-        vector<vector<int>>res;
-        for(auto i:ans)
-        res.push_back(i);
+        
+
         return res;
 
         
