@@ -8,7 +8,7 @@ public:
     for(int i=0; i<n; i++){ 
         andd&=nums[i];
         if(i==n-1){
-            andd&=nums[i];
+            // andd&=nums[i];
             break;
         }
         
