@@ -1,34 +1,60 @@
 class Solution {
-public:
-    bool dfs(int i,int j,int n,int m,vector<vector<int>>& grid1, vector<vector<int>>& grid2)
-    {
-        if(grid1[i][j]!=1)
-        return 0;
-        vector<int>dx={-1,1,0,0};
-        vector<int>dy={0,0,1,-1};
-        grid2[i][j]=0; bool x=1;
-        for(int k=0;k<4;k++)
-        {
-            int r=i+dx[k];
-            int c=j+dy[k];
-            if(r>=0 && r<n && c>=0 && c<m && grid2[r][c])
-            x&=dfs(r,c,n,m,grid1,grid2);
+private:
+    int rows, cols;
+    vector<vector<int>> status;
+    const vector<int> DR = {-1, 1, 0, 0};
+    const vector<int> DC = {0, 0, -1, 1};
+
+    bool dfs(int r, int c, vector<vector<int>>& grid1, vector<vector<int>>& grid2) {
+        if (grid1[r][c] != 1) {
+            status[r][c] = -1;
+            return false;
         }
-        return x;
+
+        status[r][c] = 1;
+        bool isSubIsland = true;
+
+        for (int i = 0; i < 4; i++) {
+            int nr = r + DR[i];
+            int nc = c + DC[i];
+
+            if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
+                if (status[nr][nc] == -1) {
+                    status[r][c] = -1;
+                    return false;
+                }
+                if (status[nr][nc] == 1) continue;
+                if (grid2[nr][nc] == 1 && !dfs(nr, nc, grid1, grid2)) {
+                    status[r][c] = -1;
+                    return false;
+                }
+            }
+        }
+
+        return isSubIsland;
     }
+
+public:
     int countSubIslands(vector<vector<int>>& grid1, vector<vector<int>>& grid2) {
-        int n=grid1.size();
-        int m=grid1[0].size();
-        int ans=0;
-        for(int i=0;i<n;i++)
-        for(int j=0;j<m;j++)
-        {
-            if(grid2[i][j])
-            ans+=dfs(i,j,n,m,grid1,grid2);
+        rows = grid1.size();
+        cols = grid1[0].size();
+        status = vector<vector<int>>(rows, vector<int>(cols, 0));
+        int subIslandCount = 0;
+
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (status[r][c] == 0 && grid2[r][c] == 1) {
+                    if (dfs(r, c, grid1, grid2)) {
+                        subIslandCount++;
+                    }
+                }
+            }
         }
-        return ans;
+
+        return subIslandCount;
     }
 };
+
 static const auto speedup = []() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
