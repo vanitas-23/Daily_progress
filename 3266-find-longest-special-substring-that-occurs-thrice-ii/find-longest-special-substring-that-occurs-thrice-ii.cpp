@@ -34,7 +34,7 @@ public:
         {
             
             int mid=(l+r)/2;
-            cout<<mid<<" ";
+            // cout<<mid<<" ";
             if(f(s,mid))
             {
                 ans=mid;
