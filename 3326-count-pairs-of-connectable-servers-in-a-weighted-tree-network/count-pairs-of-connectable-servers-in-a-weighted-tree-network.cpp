@@ -1,40 +1,42 @@
 class Solution {
 public:
-    map<pair<int,int>,int>mp;
-    int f(int node,vector<int>adj[],int par,int curr,int ss)
-    {
-        int ans=(curr%ss)==0;
-        for(auto i:adj[node])
-        if(i!=par)
-        ans+=f(i,adj,node,curr+mp[{node,i}],ss);
-        return ans;
-    }
-    vector<int> countPairsOfConnectableServers(vector<vector<int>>& edges, int ss) {
-        int n=edges.size();
-        vector<int>adj[n+1];
-
-        for(auto i:edges)
-        {
-            adj[i[0]].push_back(i[1]);
-            adj[i[1]].push_back(i[0]);
-            mp[{i[0],i[1]}]=i[2];
-            mp[{i[1],i[0]}]=i[2];
+    vector<int> countPairsOfConnectableServers(vector<vector<int>>& edges, int signalSpeed) {
+        ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+        int n=edges.size()+1;
+        typedef pair<int,int> ii;
+        vector<vector<ii>> g(n);
+        for(auto& e:edges){
+            g[e[0]].emplace_back(e[1], e[2]);
+            g[e[1]].emplace_back(e[0], e[2]);
         }
-        vector<int>ans(n+1);
-        for(int i=0;i<=n;i++)
-        {
-            vector<int>x;
-            for(auto j:adj[i])
-            x.push_back(f(j,adj,i,mp[{i,j}],ss));
-            if(x.size()==1)
-            continue;
-            int req=0;
-            auto temp=x;
-            for(int j=temp.size()-2;j>=0;j--)
-            temp[j]+=temp[j+1];
-            for(int j=0;j<x.size()-1;j++)
-            req+=(x[j]*temp[j+1]);
-            ans[i]=req;
+
+        auto dfs=[&](int u, int p, int d, auto&& dfs)->int{
+            int res=0;
+            if(d%signalSpeed==0){
+                res++;
+            }
+            for(auto& [v,w]: g[u]){
+                if(v!=p){
+                    res+=dfs(v,u,d+w, dfs);
+                }
+            }
+            return res;
+        };
+
+        vector<int> ans(n);
+        for(int i=0; i<n; i++){
+            int m=g[i].size();
+            if(m==1){
+                ans[i]=0;
+                continue;
+            }
+            int sum=0;
+            ans[i]=0;
+            for(auto& [v,w]:g[i]){
+                int r=dfs(v,i,w, dfs);
+                ans[i]+=sum*r;
+                sum+=r;
+            }
         }
         return ans;
     }
