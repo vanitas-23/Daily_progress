@@ -14,6 +14,8 @@ public:
         int n=arr.size();
         for(int i=0;i<26;i++)
         {
+            if(arr[i]==0)
+                continue;
             auto it=upper_bound(arr.begin(),arr.end(),arr[i]+k)-arr.begin();
             it--;
             long long sm=p[it]-arr[it];
