@@ -4,7 +4,7 @@ public:
     vector<long long> mostFrequentIDs(vector<int>& nums, vector<int>& frq) {
         int n=nums.size();
         multiset<ll>st;
-        map<int,ll>mp;
+        unordered_map<int,ll>mp;
         vector<ll>ans;
         for(int i=0;i<n;i++)
         {
