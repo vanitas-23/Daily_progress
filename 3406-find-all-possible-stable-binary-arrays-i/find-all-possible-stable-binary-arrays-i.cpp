@@ -1,36 +1,39 @@
 class Solution {
 public:
-    int limit;
-    int memo[202][202][202][2];
-    const int mod=1e9+7;
-    long long dp(int zero,int one,int l,bool pvs){
-        if(zero==0&&one==0)return 1;
-        if(pvs!=-1&&memo[zero][one][l][pvs]!=-1)return memo[zero][one][l][pvs]%mod;
-        long long ans=0;
-        if(pvs==-1){
-            if(zero)ans+=dp(zero-1,one,1,0);
-            if(one)ans+=dp(zero,one-1,1,1);
-        }else if(pvs==1){
-            if(l+1>limit){
-                if(zero)ans+=dp(zero-1,one,1,0);
-            }else{
-                if(one)ans+=dp(zero,one-1,l+1,1);
-                if(zero)ans+=dp(zero-1,one,1,0);
+    int numberOfStableArrays(int zero, int one, int limit) {
+        ios::sync_with_stdio(false);
+        vector<vector<int>> dp0(zero + 1, vector<int>(one + 1, 0));
+        vector<vector<int>> dp1(zero + 1, vector<int>(one + 1, 0));
+        vector<int> dp0sum(zero + 1, 0);
+        vector<int> dp1sum(one + 1, 0);
+        int mod = 1e9 + 7;
+
+        for (int j = 0; j <= one; j++) {
+            if (j <= limit) {
+                dp1[0][j] = 1;
             }
-        }else{
-            if(l+1>limit){
-                if(one)ans+=dp(zero,one-1,1,1);
-            }else{
-                if(zero)ans+=dp(zero-1,one,l+1,0);
-                if(one)ans+=dp(zero,one-1,1,1);
+            dp1sum[j] = dp1[0][j];
+        }
+
+        for (int i = 1; i <= zero; i++) {
+            if (i <= limit) {
+                dp0[i][0] = 1;
+            }
+            dp0sum[i] = dp0[i][0];
+
+            for (int j = 1; j <= one; ++j) {
+                dp0[i][j] = dp1sum[j];
+                dp1[i][j] = dp0sum[i];
+                dp0sum[i] = (dp0sum[i] + dp0[i][j]) % mod;
+                if (j >= limit) {
+                    dp0sum[i] = (dp0sum[i] - dp0[i][j - limit] + mod) % mod;
+                }
+                dp1sum[j] = (dp1sum[j] + dp1[i][j]) % mod;
+                if (i >= limit) {
+                    dp1sum[j] = (dp1sum[j] - dp1[i - limit][j] + mod) % mod;
+                }
             }
         }
-        if(pvs!=-1)memo[zero][one][l][pvs]=ans%mod;
-        return ans%mod;
-    }
-    int numberOfStableArrays(int zero, int one, int limit) {
-        memset(memo,-1,sizeof(memo));
-        this->limit=limit;
-        return dp(zero,one,0,-1)%mod;
+        return (dp0[zero][one] + dp1[zero][one]) % mod;
     }
 };
