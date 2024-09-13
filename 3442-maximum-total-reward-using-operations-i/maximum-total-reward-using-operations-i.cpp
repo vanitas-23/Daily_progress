@@ -15,7 +15,7 @@ public:
     int maxTotalReward(vector<int>& r) {
         sort(r.begin(),r.end());
         int n=r.size();
-        vector<vector<int>>dp(n,vector<int>(2*r.back()+1,-1));
+        vector<vector<int>>dp(n,vector<int>(2*r.back(),-1));
         return f(0,n,r,0,dp);
     }
 };
