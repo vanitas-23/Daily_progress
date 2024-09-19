@@ -4,7 +4,6 @@ public:
     {
         if(i==n-1)
         return {exp[i]-'0'};
-        string temp="";
         vector<int>arr;
         bool op=0;
         for(int j=i;j<n;j++)
