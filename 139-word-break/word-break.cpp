@@ -1,28 +1,63 @@
+class TrieNode {
+public:
+    char character;
+    TrieNode* children[26];
+    bool isEndOfWord;
+
+    TrieNode(char c) {
+        character = c;
+        for (int i = 0; i < 26; i++) children[i] = nullptr;
+        isEndOfWord = false;
+    }
+};
+
 class Solution {
 public:
-    unordered_map<string, bool> mp;
+    TrieNode* root;
 
-    bool f(int i, int j, int n, string A, vector<vector<int>>& dp) {
-        if (j == n - 1)
-            return mp[A.substr(i, j - i + 1)];
-
-        if (dp[i][j] != -1)
-            return dp[i][j];
-
-        string temp = A.substr(i, j - i + 1);
-        int np=0;
-    if (mp[temp])
-         np = f(j + 1, j + 1, n, A, dp);
-
-    return dp[i][j] = np | f(i, j + 1, n, A, dp);
+    Solution() {
+        root = new TrieNode('\0');
     }
-    bool wordBreak(string A, vector<string>& B) {
-        for (auto i : B)
-            mp[i] = 1;
 
-        int n = A.size();
-        vector<vector<int>> dp(n, vector<int>(n, -1));
+    void insertWord(TrieNode* root, const string& word) {
+        TrieNode* currentNode = root;
+        for (char c : word) {
+            int index = c - 'a';
+            if (currentNode->children[index] == nullptr) {
+                currentNode->children[index] = new TrieNode(c);
+            }
+            currentNode = currentNode->children[index];
+        }
+        currentNode->isEndOfWord = true;
+    }
 
-        return f(0, 0, n, A, dp);
+    bool canSegmentString(TrieNode* root, const string& s, int start, vector<int>& memo) {
+        if (start == s.size()) return true; 
+
+        if (memo[start] != -1) return memo[start]; 
+
+        TrieNode* currentNode = root;
+        for (int i = start; i < s.size(); ++i) {
+            int index = s[i] - 'a';
+            if (currentNode->children[index] == nullptr) {
+                memo[start] = 0;
+                return false; 
+            }
+            currentNode = currentNode->children[index];
+            if (currentNode->isEndOfWord && canSegmentString(root, s, i + 1, memo)) {
+                memo[start] = 1;
+                return true;
+            }
+        }
+        memo[start] = 0; 
+        return false;
+    }
+
+    bool wordBreak(string s, vector<string>& wordDict) {
+        for (const string& word : wordDict) {
+            insertWord(root, word); 
+        }
+        vector<int> memo(s.size(), -1);
+        return canSegmentString(root, s, 0, memo);
     }
 };
