@@ -1,6 +1,6 @@
 class TrieNode {
 public:
-    unordered_map<char, pair<int,TrieNode*>> children;
+    map<char, pair<int,TrieNode*>> children;
     bool isEndOfWord = false;
 };
 
