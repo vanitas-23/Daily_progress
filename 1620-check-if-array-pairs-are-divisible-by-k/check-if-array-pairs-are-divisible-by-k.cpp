@@ -1,7 +1,7 @@
 class Solution {
 public:
     bool canArrange(vector<int>& arr, int k) {
-        map<int,int>mp;
+        vector<int>mp(k);
         int pr=0;
         int n=arr.size();
         for(int i=0;i<n;i++)
@@ -11,12 +11,10 @@ public:
                 arr[i]=arr[i]%k;
                 arr[i]=(arr[i]+k)%k;
             }
-            if(mp.find((k-arr[i]%k)%k)!=mp.end())
+            if(mp[(k-arr[i]%k)%k])
             {
                 pr++;
                 mp[(k-arr[i]%k)%k]--;
-                if(mp[(k-arr[i]%k)%k]==0)
-                mp.erase((k-arr[i]%k)%k);
                 continue;
             }
             mp[arr[i]%k]++;
