@@ -10,7 +10,7 @@ public:
             long long x=pq.top();
             pq.pop();
             ans+=x;
-            pq.push(ceil(x*1.0/3));
+            pq.push((x+2)/3);
         }
         return ans;
     }
