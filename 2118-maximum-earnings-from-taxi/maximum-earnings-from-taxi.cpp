@@ -9,7 +9,7 @@ public:
         return dp[i];
         ll nt=f(i+1,m,rides,arr,dp);
         ll t=rides[i][1]-rides[i][0]+rides[i][2];
-        auto it=lower_bound(arr.begin()+i,arr.end(),rides[i][1])-arr.begin();
+        auto it=lower_bound(arr.begin(),arr.end(),rides[i][1])-arr.begin();
         t+=f(it,m,rides,arr,dp);
         return dp[i]=max(t,nt);
     }
