@@ -1,41 +1,21 @@
 class Solution {
 public:
-    
-    int solve(vector<int>& a, int ind, int s, int t, vector<vector<int>> &v)
+    int f(int i,int n,vector<int>& nums,int curr,int mx, vector<vector<int>>& dp)
     {
-        int n  = a.size();
-        if(ind == n)
-        {
-           if(t == s)
-               return 1;
-            return 0;
-        }
-        
-        if(v[ind][s] != -1)
-            return v[ind][s];
-        
-        int in = solve(a,ind+1, s|a[ind],t,v);
-        int out = solve(a,ind+1, s,t,v);
-        
-        return v[ind][s] = in+out;
-        
-        
+        if(i==n)
+        return curr==mx;
+        if(dp[i][curr]!=-1)
+        return dp[i][curr];
+        int nt=f(i+1,n,nums,curr,mx,dp);
+        int t=f(i+1,n,nums,curr|nums[i],mx,dp);
+        return dp[i][curr]=t+nt;
     }
-    
-    int countMaxOrSubsets(vector<int>& a) {
-        
-        int t = 0;
-        for(auto h : a)
-        {
-            t|=h;
-        }
-        
-        int n = a.size();
-        
-        vector<vector<int>> v(n, vector<int>(1000000,-1));
-        
-        int ans = solve(a,0,0,t,v);
-        
-        return ans;
+    int countMaxOrSubsets(vector<int>& nums) {
+        int mx=0;
+        int n=nums.size();
+        for(int i=0;i<n;i++)
+            mx|=nums[i];
+        vector<vector<int>>dp(n,vector<int>(mx+1,-1));
+        return f(0,n,nums,0,mx,dp);
     }
 };
