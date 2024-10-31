@@ -1,35 +1,23 @@
+const int mod=1e9+7,MX=2e3+10;
+int mult(int a,int b){return (1ll*a*b)%mod;}
+int fact[MX],inv[MX],invfact[MX];
+void init_INV(){
+	fact[0] = invfact[0] = fact[1] = invfact[1] = inv[1] = 1;
+    for (int i = 2; i < MX; i++) {
+        fact[i] = mult(fact[i - 1], i);
+        inv[i] = mult(inv[mod % i], mod - mod / i);
+        invfact[i] = mult(invfact[i - 1], inv[i]);
+    }
+}
+int ncr(int n,int r){
+	if(r > n) return 0;
+	return (1LL * fact[n] * invfact[n-r] % mod) * 1LL *invfact[r] % mod;
+}
+
 class Solution {
 public:
-    long int mod = 1e9 + 7;
-    int dp[1001][1001][2];
-    long int solve(int r, int n, int num, bool start) {
-        if (r >= n)
-            return 0;
-        if (num == 0)
-            return 1;
-        int ans = 0;
-
-        if (dp[r][num][start] != -1)
-            return dp[r][num][start];
-
-        if (start) {
-            ans += solve(r, n, num, 0);
-            ans = ans % mod; // start it
-            ans += solve(r + 1, n, num, 1);
-            ans = ans % mod; // postpone it
-        }
-
-        else {
-            ans += solve(r + 1, n, num - 1, 1);
-            ans = ans % mod; // end it
-            ans += solve(r + 1, n, num, 0);
-            ans = ans % mod; // extend it
-        }
-        return dp[r][num][start] = ans % mod;
-    }
     int numberOfSets(int n, int k) {
-        memset(dp, -1, sizeof(dp));
-
-        return solve(0, n, k, 1);
+        init_INV();
+        return ncr(n + k - 1, 2 * k);
     }
 };
