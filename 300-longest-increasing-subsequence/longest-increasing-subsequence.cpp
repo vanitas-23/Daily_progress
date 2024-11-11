@@ -1,14 +1,23 @@
 class Solution {
 public:
-    int lengthOfLIS(vector<int>& a) {
-        vector<int>tab;
-       tab.push_back(a[0]);
-       int n=a.size();
-       for(int i = 1; i < n; i++){
-           if(tab.back() < a[i])tab.push_back(a[i]);
-           else *lower_bound(tab.begin(), tab.end(), a[i]) = a[i];
-       }
-       
-       return tab.size();
+    int f(int i,int n,vector<int>& nums,int pre, vector<vector<int>>& dp)
+    {
+        if(i==n)
+        return 0;
+        if(dp[i][pre]!=-1)
+        return dp[i][pre];
+        int nt=f(i+1,n,nums,pre, dp);
+        int t=0;
+        if(nums[pre]<nums[i])
+        t=1+f(i+1,n,nums,i,dp);
+        return dp[i][pre]= max(t,nt);
+    }
+    int lengthOfLIS(vector<int>& nums) {
+        int n=nums.size();
+        int ans=0;
+        vector<vector<int>>dp(n,vector<int>(n,-1));
+        for(int i=0;i<n;i++)
+        ans=max(ans,1+f(i+1,n,nums,i, dp));
+        return ans;
     }
 };
