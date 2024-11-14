@@ -5,7 +5,7 @@ public:
     {
         ll sum=0;
         for(auto i:q)
-        sum+=(i+mid-1)/mid;
+        sum+=ceil(i*1.0/mid);
         return sum<=n;
     }
     int minimizedMaximum(int n, vector<int>& q) {
