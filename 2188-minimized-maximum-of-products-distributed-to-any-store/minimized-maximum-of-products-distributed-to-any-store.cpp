@@ -1,16 +1,28 @@
+#define ll int
 class Solution {
 public:
-        int minimizedMaximum(int n, vector<int>& A) {
-        int left = 1, right = 100000;
-        while (left < right) {
-            int mid = (left + right) / 2, sum = 0;
-            for (int a : A)
-                sum += (a + mid - 1) / mid;
-            if (sum > n)
-                left = mid + 1;
+    bool f(ll mid,int n,vector<int>& q)
+    {
+        ll sum=0;
+        for(auto i:q)
+        sum+=(i+mid-1)/mid;
+        return sum<=n;
+    }
+    int minimizedMaximum(int n, vector<int>& q) {
+        int l=1;
+        ll r=*max_element(q.begin(),q.end());
+        ll ans=r;
+        while(l<=r)
+        {
+            ll mid=(l+r)/2;
+            if(f(mid,n,q))
+            {
+                ans=mid;
+                r=mid-1;
+            }
             else
-                right = mid;
+            l=mid+1;
         }
-        return left;
+        return ans;
     }
 };
