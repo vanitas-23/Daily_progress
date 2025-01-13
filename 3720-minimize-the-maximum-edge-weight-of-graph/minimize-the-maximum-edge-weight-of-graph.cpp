@@ -1,56 +1,49 @@
+typedef pair<int, int> pi;
+typedef pair<pi, pi> pii;
+typedef tuple<int,int,int> ti;
+typedef vector<vector<vector<signed>>> viii;
+typedef vector<vector<int>> vii;
+typedef vector<vector<pi>> vpi;
+typedef vector<int> vi;
+#define x first
+#define y second
+template <class T> istream &operator>>(istream &is, vector<T> &v) { for (auto &x : v) is >> x; return is; }
+template <class T> ostream &operator<<(ostream &os, const vector<T> &v) { for (int i = 0; i < int(v.size()); i++) os << (i ? " " : "") << v[i]; return os; }
+
 class Solution {
 public:
-    void dfs(int node, vector<vector<int>>& adj, vector<bool>& visited) {
-        visited[node] = true;
-        for (int neighbor : adj[node]) {
-            if (!visited[neighbor]) {
-                dfs(neighbor, adj, visited);
-            }
-        }
-    }
-    
-    bool f(int n, vector<vector<int>>& edges, int threshold, int maxWeight) {
-        vector<vector<int>> adj(n);
-        for (auto& edge : edges) {
-            if (edge[2] <= maxWeight && adj[edge[0]].size() < threshold) {
-                adj[edge[0]].push_back(edge[1]);
-            }
-        }
-        for (int i = 0; i < n; ++i) {
-            if (adj[i].size() > threshold) return false;
-        }
-        vector<bool> visited(n, false);
-        vector<vector<int>> revAdj(n);
-        for (auto& edge : edges) {
-            if (edge[2] <= maxWeight) {
-                revAdj[edge[1]].push_back(edge[0]);
-            }
-        }
-
-        dfs(0, revAdj, visited);
-        for (int i = 0; i < n; ++i) {
-            if (!visited[i]) return false;
-        }
-        
-        return true;
-    }
-    
     int minMaxWeight(int n, vector<vector<int>>& edges, int threshold) {
-        
-        int low = 1, high = 0;
-        for (auto& edge : edges) high = max(high, edge[2]);
-        int result = -1;
-        if(!f(n,edges,threshold,high)) return -1;
-        
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            if (f(n, edges, threshold, mid)) {
-                result = mid;
-                high = mid - 1; 
-            } else {
-                low = mid + 1; 
+        int mx=0;
+        vpi v(n);
+        for(auto &i:edges) {
+            v[i[1]].push_back({i[0],i[2]});
+            mx=max(mx,i[2]);
+        }
+        auto check=[&](int x)->bool {
+            vi d(n);
+            auto dfs=[&](auto &dfs,int cur)->void {
+                d[cur]=1;
+                for(auto &[a,b]:v[cur]) {
+                    if(b>x||d[a]!=0) continue;
+                    dfs(dfs,a);
+                }
+            };
+            dfs(dfs,0);
+            int res=0;
+            for(auto &i:d) res+=i;
+            return res==n;
+        };
+        if(!check(mx)) return -1;
+        int l=0,r=mx;
+        int ans=r;
+        while(l<=r) {
+            int mid=(l+r)/2;
+            if(check(mid)) {
+                ans=mid;r=mid-1;
+            }else{
+                l=mid+1;
             }
         }
-        return result;
+        return ans;
     }
 };
