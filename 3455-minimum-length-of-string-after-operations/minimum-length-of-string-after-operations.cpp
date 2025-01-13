@@ -7,9 +7,11 @@ public:
         int ans=0;
         for(int i=0;i<26;i++)
         {
-            while(arr[i]>2)
-            arr[i]-=2;
-            ans+=arr[i];
+            if(arr[i]==0) continue;
+            if(arr[i]%2)
+            ans++;
+            else
+            ans+=2;
         }
         return ans;
     }
