@@ -33,9 +33,9 @@ public:
             for(auto &i:d) res+=i;
             return res==n;
         };
-        if(!check(mx)) return -1;
+        //if(!check(mx)) return -1;
         int l=0,r=mx;
-        int ans=r;
+        int ans=-1;
         while(l<=r) {
             int mid=(l+r)/2;
             if(check(mid)) {
