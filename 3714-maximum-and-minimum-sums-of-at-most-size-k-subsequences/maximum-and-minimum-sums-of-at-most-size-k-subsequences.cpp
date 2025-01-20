@@ -5,19 +5,24 @@ class Solution {
 public:
     int minMaxSums(vector<int>& nums, int k) {
         const int MAXN = 100001;
-        sort(nums.begin(),nums.end());
-        vector<long long> FS(MAXN, 1), IFS(MAXN, 1), invs(MAXN, 1);
+        sort(nums.begin(), nums.end());
+        
+        // Precompute factorials and modular inverses
+        vector<ll> fact(MAXN, 1), invFact(MAXN, 1);
         for (int i = 2; i < MAXN; ++i) {
-            FS[i] = FS[i - 1] * i % MOD;
-            invs[i] = MOD - MOD / i * invs[MOD % i] % MOD;
-            IFS[i] = IFS[i - 1] * invs[i] % MOD;
+            fact[i] = fact[i - 1] * i % MOD;
         }
+        invFact[MAXN - 1] = modExp(fact[MAXN - 1], MOD - 2, MOD);
+        for (int i = MAXN - 2; i >= 1; --i) {
+            invFact[i] = invFact[i + 1] * (i + 1) % MOD;
+        }
+
+        // Lambda function for nCr
         auto nCr = [&](int n, int r) {
-            if (r < 0 || r > n) {
-                return 0LL;
-            }
-            return FS[n] * IFS[r] % MOD * IFS[n - r] % MOD;
+            if (r < 0 || r > n) return 0LL;
+            return fact[n] * invFact[r] % MOD * invFact[n - r] % MOD;
         };
+
         int n = nums.size();
         ll ans = 2ll * accumulate(nums.begin(), nums.end(), 0ll);
         for (int i = 2; i <= k; i++) {
@@ -30,5 +35,18 @@ public:
             }
         }
         return ans % MOD;
+    }
+
+private:
+    ll modExp(ll base, ll exp, ll mod) {
+        ll result = 1;
+        while (exp > 0) {
+            if (exp % 2 == 1) {
+                result = result * base % mod;
+            }
+            base = base * base % mod;
+            exp /= 2;
+        }
+        return result;
     }
 };
