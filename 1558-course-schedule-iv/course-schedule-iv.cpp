@@ -8,8 +8,6 @@ public:
         for(int j=0;j<n;j++)
         for(int k=0;k<n;k++)
         if(mat[j][i] && mat[i][k]) mat[j][k]=1;
-
-        
         vector<bool>ans;
         for(auto i:q) ans.push_back(mat[i[0]][i[1]]);
         return ans;
