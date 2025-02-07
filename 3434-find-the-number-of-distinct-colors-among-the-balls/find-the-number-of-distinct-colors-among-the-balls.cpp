@@ -1,8 +1,8 @@
 class Solution {
 public:
     vector<int> queryResults(int limit, vector<vector<int>>& queries) {
-        map<int,int>coCount;
-        map<int,int>co;
+        unordered_map<int,int>coCount;
+        unordered_map<int,int>co;
         vector<int>ans;
         for(auto i:queries)
         {
