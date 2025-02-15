@@ -1,24 +1,30 @@
-bool CanMake(int num, int target) {
-  if (target < 0 || num < target) {
-    return false;
-  }
-  if (num == target) {
-    return true;
-  }
-  return CanMake(num / 10, target - num % 10) || CanMake(num / 100, target - num % 100) ||
-      CanMake(num / 1000, target - num % 1000);
-}
-
 class Solution {
 public:
-  int punishmentNumber(int n) {
-    int answer = 0;
-    for (int i = 1; i <= n; ++i) {
-      int num = i * i;
-      if (CanMake(num, i)) {
-        answer += num;
-      }
+    bool f(int i,string& s ,int n)
+    {
+        if(i==s.size())
+        return n==0;
+        string temp="";
+        bool b=0;
+        for(int j=i;j<s.size();j++)
+        {
+            temp+=s[j];
+            int x=stoi(temp);
+            if(x>n)
+            break;
+            b|=f(j+1,s,n-x);
+        }
+        return b;
     }
-    return answer;
-  }
+    int punishmentNumber(int n) {
+        int ans=0;
+        for(int i=1;i<=n;i++)
+        {
+            int x = i*i;
+            string s=to_string(x);
+            if(f(0,s,i))
+            ans+=x;
+        }
+        return ans;
+    }
 };
