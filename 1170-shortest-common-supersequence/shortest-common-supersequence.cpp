@@ -1,6 +1,6 @@
 class Solution {
 public:
-    string lcs(string a, string b) {
+    string f(string a, string b) {
         int n = a.size(), m = b.size();
         vector<vector<int>> dp(n + 1, vector<int>(m + 1));
         for (int i = 1; i <= n; i++)
@@ -23,8 +23,7 @@ public:
         reverse(res.begin(), res.end());
         return res;
     }
-    string shortestCommonSupersequence(string str1, string str2) {
-        auto x = lcs(str1,str2);
-        return x;
+    string shortestCommonSupersequence(string a, string b) {
+        return f(a,b);
     }
 };
