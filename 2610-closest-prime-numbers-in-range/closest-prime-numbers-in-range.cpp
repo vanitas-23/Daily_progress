@@ -28,6 +28,8 @@ public:
                 mn=prs[i]-prs[i-1];
                 ans[0]=prs[i-1];
                 ans[1]=prs[i];
+                if(mn==2)
+                return ans;
             }
         }
         return ans;
