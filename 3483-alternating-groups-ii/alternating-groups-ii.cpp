@@ -6,8 +6,7 @@ public:
         for(int i=0;i<k-1;i++)
         arr.push_back(c[i]);
         int sz=1;
-        for(auto i:arr)
-        cout<<i<<" ";
+        
         for(int i=1;i<arr.size();i++)
         {
             if(arr[i]!=arr[i-1])
