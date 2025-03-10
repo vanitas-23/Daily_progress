@@ -12,7 +12,7 @@ public:
         ll ans=0;
         int i=0;
         int j=0;
-        map<char,int>mp;
+        unordered_map<char,int>mp;
         while(j<n)
         {
             if(isV(word[j]))
