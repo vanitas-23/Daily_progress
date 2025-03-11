@@ -2,19 +2,21 @@ class Solution {
 public:
     int numberOfSubstrings(string s) {
         int n=s.size();
-        map<int,int>mp;
+        vector<int>arr(3);
+        int curr=0;
         int i=0;
         int ans=0;
         int j=0;
         while(j<n)
         {
-            mp[s[j]-'a']++;
-            while(mp.size()==3)
+            arr[s[j]-'a']++;
+            curr|=(1<<(s[j]-'a'));;
+            while(curr==7)
             {
                 ans+=(n-j);
-                mp[s[i]-'a']--;
-                if(mp[s[i]-'a']==0)
-                mp.erase(s[i]-'a');
+                arr[s[i]-'a']--;
+                if(arr[s[i]-'a']==0)
+                curr^=(1<<(s[i]-'a'));
                 i++;
             }
             j++;
