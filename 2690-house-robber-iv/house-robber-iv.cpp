@@ -1,21 +1,15 @@
 class Solution {
 public:
-    int f(int i,int n,vector<int>& nums,int k,int mid,vector<int>& dp)
-    {
-        if(i>=n)
-        return 0;
-        if(dp[i]!=-1)
-        return dp[i];
-        int ans=f(i+1,n,nums,k,mid,dp);
-        if(mid>=nums[i])
-        ans=max(ans,1+f(i+2,n,nums,k,mid,dp));
-        return dp[i]=ans;
-    }
     bool check(vector<int>& nums,int k,int mid,int n)
     {
-        vector<int>dp(n,-1);
-        int mx=f(0,n,nums,k,mid,dp);
-        return mx>=k;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]<=mid)
+            i++,k--;
+            if(k==0)
+            return 1;
+        }
+        return 0;
     }
     int minCapability(vector<int>& nums, int k) {
         int n=nums.size();
