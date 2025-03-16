@@ -1,6 +1,6 @@
 class Solution {
 public:
-    bool f(int i,int n,vector<int>& x,int tar,vector<vector<int>>& dp)
+    int f(int i,int n,vector<int>& x,int tar,vector<vector<int>>& dp)
     {
         if(tar==0)
         return 1;
