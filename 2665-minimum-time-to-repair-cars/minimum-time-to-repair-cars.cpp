@@ -16,7 +16,7 @@ public:
     }
     long long repairCars(vector<int>& ranks, int cars) {
         ll l=0;
-        ll r=1e15;
+        ll r=1e18;
         ll ans=r;
         while(l<=r)
         {
