@@ -25,6 +25,8 @@ public:
         grid = inputGrid;
         n = grid.size();
         m = grid[0].size();
+        if((n+m-1)%2)
+        return false;
         dp.assign(n, vector<vector<int>>(m, vector<int>(n + m, -1)));
         return f(0, 0, 0);
     }
