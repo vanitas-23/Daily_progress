@@ -1,32 +1,25 @@
+#define ll long long
 class Solution {
 public:
-    int maximumsSplicedArray(vector<int>& nums1, vector<int>& nums2) {
+    int f(vector<int>& nums1, vector<int>& nums2)
+    {
         int n=nums1.size();
-        vector<int>rec(n);
-        for(int i=0;i<n;i++)
-        rec[i]=nums1[i]-nums2[i];
-        int mx=0;
-        int temp=0;
-        for(int i=0;i<n;i++)
+        vector<ll>prf1(n),prf2(n);
+        prf1[0]=nums1[0];
+        prf2[0]=nums2[0];
+        for(int i=1;i<n;i++)
+        prf1[i]=prf1[i-1]+nums1[i],
+        prf2[i]=prf2[i-1]+nums2[i];
+        ll gain=0;
+        ll mn=prf2[0]-prf1[0];
+        for(int i=1;i<n;i++)
         {
-            temp+=rec[i];
-            mx=max(mx,temp);
-            if(temp<0)
-            temp=0;
+            gain=max(prf2[i]-prf1[i]-mn,gain);
+            mn=min(mn,prf2[i]-prf1[i]);
         }
-        int res=accumulate(nums2.begin(),nums2.end(),0)+mx;
-        for(int i=0;i<n;i++)
-        rec[i]=nums2[i]-nums1[i];
-         mx=0;
-         temp=0;
-        for(int i=0;i<n;i++)
-        {
-            temp+=rec[i];
-            mx=max(mx,temp);
-            if(temp<0)
-            temp=0;
-        }
-        res=max(res,accumulate(nums1.begin(),nums1.end(),0)+mx);
-        return res;
+        return prf1[n-1]+gain;
+    }
+    int maximumsSplicedArray(vector<int>& nums1, vector<int>& nums2) {
+        return max(f(nums1,nums2),f(nums2,nums1));
     }
 };
