@@ -1,0 +1,30 @@
+int dp[100][100][200];
+class Solution {
+public:
+    vector<vector<char>> grid;
+    int n, m;
+    bool f(int i, int j, int curr) {
+        if (grid[i][j] == '(')
+            curr++;
+        else
+            curr--;
+        
+        if (curr < 0) return false;
+        if (i == n - 1 && j == m - 1) return curr == 0;
+        if (dp[i][j][curr] != -1) return dp[i][j][curr];
+
+        bool ans = false;
+        if (i + 1 < n) ans |= f(i + 1, j, curr);
+        if (j + 1 < m) ans |= f(i, j + 1, curr);
+
+        return dp[i][j][curr] = ans;
+    }
+
+    bool hasValidPath(vector<vector<char>>& inputGrid) {
+        grid = inputGrid;
+        n = grid.size();
+        m = grid[0].size();
+        memset(dp, -1, sizeof(dp));
+        return f(0, 0, 0);
+    }
+};
