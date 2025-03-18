@@ -2,23 +2,26 @@ class Solution {
 public:
     int longestNiceSubarray(vector<int>& nums) {
         int ans=0;
-        int i=0;
         int n=nums.size();
-        vector<int>arr(32);
+        int i=0;
         int j=0;
+        vector<int>arr(32);
         while(j<n)
         {
-            for(int x=31;x>=0;x--)
-            if(nums[j]&(1<<x))
-            arr[x]++;
-            
-            for(int x=31;x>=0;x--)
+            for(int k=0;k<32;k++)
             {
-                while(arr[x]>1)
+                if(nums[j]&(1<<k))
+                arr[k]++;
+            }
+            for(int k=0;k<32;k++)
+            {
+                while(arr[k]>1)
                 {
-                    for(int z=31;z>=0;z--)
-                    if(nums[i]&(1<<z))
-                    arr[z]--;
+                    for(int k=0;k<32;k++)
+                    {
+                        if(nums[i]&(1<<k))
+                        arr[k]--;
+                    }
                     i++;
                 }
             }
