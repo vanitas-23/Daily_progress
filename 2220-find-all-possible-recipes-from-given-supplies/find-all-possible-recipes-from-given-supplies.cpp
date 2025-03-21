@@ -2,9 +2,9 @@ class Solution {
 public:
     vector<string> findAllRecipes(vector<string>& rec, vector<vector<string>>& ing, vector<string>& supp) {
         queue<string> q;
-        map<string, vector<string>> mp;
-        map<string,int>inD;
-        set<string>st;
+        unordered_map<string, vector<string>> mp;
+        unordered_map<string,int>inD;
+        unordered_set<string>st;
         vector<string>res;
         int n=rec.size();
         for(int i=0;i<n;i++)
