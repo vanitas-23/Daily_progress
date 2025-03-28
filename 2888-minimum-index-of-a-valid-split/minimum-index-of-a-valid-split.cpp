@@ -1,28 +1,24 @@
 class Solution {
 public:
     int minimumIndex(vector<int>& nums) {
-        unordered_map<int,int>mp;
+        unordered_map<int,int>tot;
+        unordered_map<int,int>curr;
+        int n = nums.size();
         for(auto i:nums)
-        mp[i]++;
-        int dom=0;
-        int frq=0;
-        for(auto i:mp)
+        tot[i]++;
+        int mxE=0;
+        int mxF=0;
+        for(int i=0;i<n;i++)
         {
-            if(i.second>frq)
+            curr[nums[i]]++;
+            if(mxF<curr[nums[i]])
             {
-                frq=i.second;
-                dom=i.first;
+                mxF=curr[nums[i]];
+                mxE=nums[i];
             }
-        }
-        int n=nums.size();
-        mp.clear();
-        int i=0;
-        while(i<n)
-        {
-            mp[nums[i]]++;
-            if(mp[dom]*2>(i+1) && (frq-mp[dom])*2>(n-i-1))
+            int frq = tot[mxE]-curr[mxE];
+            if(curr[mxE]>(i+1)/2 && frq>(n-i-1)/2)
             return i;
-            i++;
         }
         return -1;
     }
