@@ -1,7 +1,4 @@
-class Solution {
-private:
-		unordered_map<TreeNode*, int> depth;
-    
+class Solution {  
 public:
     TreeNode* lcaDeepestLeaves(TreeNode* root) {
         if(!root)
