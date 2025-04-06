@@ -1,27 +1,39 @@
 class Solution {
 public:
     vector<int> largestDivisibleSubset(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
-        int n = nums.size();
-        vector<int> groupSize(n, 1), prevElement(n, -1);
-        int maxIndex = 0;
-
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < i; ++j) {
-                if (nums[i] % nums[j] == 0 && groupSize[i] < groupSize[j] + 1) {
-                    groupSize[i] = groupSize[j] + 1;
-                    prevElement[i] = j;
+        sort(nums.begin(),nums.end());
+        vector<int>ans;
+        int n=nums.size();
+        vector<int>pre(n,-1);
+        vector<int>cnt(n,1);
+        for(int i=0;i<n;i++)
+        {
+            for(int j=i+1;j<n;j++)
+            if(nums[j]%nums[i]==0)
+            {
+                if(cnt[i]+1>cnt[j])
+                {
+                    cnt[j]=cnt[i]+1;
+                    pre[j]=i;
                 }
             }
-            if (groupSize[i] > groupSize[maxIndex]) {
-                maxIndex = i;
+        }
+        vector<int>mark(n);
+        for(int i=n-1;i>=0;i--)
+        {
+            if(mark[i])
+            continue;
+            vector<int>x;
+            int curr=i;
+            while(curr!=-1)
+            {
+                x.push_back(nums[curr]);
+                mark[curr]=1;
+                curr=pre[curr];
             }
+            if((int)x.size()>(int)ans.size())
+            ans=x;
         }
-
-        vector<int> result;
-        for (int i = maxIndex; i != -1; i = prevElement[i]) {
-            result.insert(result.begin(), nums[i]);
-        }
-        return result;
+        return ans;
     }
 };
