@@ -6,11 +6,7 @@ public:
         for(int i=n-1;i>=0;i--)
         {
             if(arr[nums[i]])
-            {
-                if((i+1)%3==0)
-                return (i+1)/3;
-                return (i+1)/3+1;
-            }
+            return ceil((i+1)*1.0/3);
             else
             arr[nums[i]]=1;
         }
