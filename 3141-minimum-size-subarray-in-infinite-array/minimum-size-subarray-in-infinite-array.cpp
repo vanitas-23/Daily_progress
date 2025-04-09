@@ -1,41 +1,37 @@
 #define ll long long
 class Solution {
 public:
-    int f(vector<int>& nums,int tar)
-    {
-        if(tar==0)
-        return 0;
-        int n=nums.size();
-        vector<ll>pre(nums.begin(),nums.end());
-        for(int i=1;i<n;i++)
-        pre[i]+=pre[i-1];
-        int ans=INT_MAX;
-        map<ll,int>mp;
-        for(int i=0;i<n;i++)
-        {
-            if(mp.find(pre[i]-tar)!=mp.end())
-            ans=min(ans,i-mp[pre[i]-tar]);
-            mp[pre[i]]=i;
+    int minSizeSubarray(vector<int>& nums, int k) {
+        vector<ll> arr(nums.begin(), nums.end());
+        int n = arr.size();
+        ll sum = accumulate(arr.begin(), arr.end(), 0ll);
+        for (int i = 0; i < n; i++)
+        arr.push_back(arr[i]);
+
+        ll tot = k / sum;
+        ll req = k % sum;
+        // for(auto i:arr)
+        // cout<<i<<" ";
+        // cout<<endl;
+        // cout<<tot<<" "<<sum<<" "<<req<<endl;
+        if (req == 0) 
+        return tot*n;
+        ll curr = 0;
+        int sz = 2 * n + 1;
+        int i = 0;
+        int j = 0;
+        while (j < 2 * n) {
+            curr += arr[j];
+            while (curr > req)
+                curr -= arr[i++];
+            if (curr == req)
+                sz = min(sz, j - i + 1);
+            // cout<<i<<" "<<j<<" "<<curr<<endl;
+            j++;
         }
-        return ans;
-    }
-    int minSizeSubarray(vector<int>& nums, int target) {
-        ll x=accumulate(nums.begin(),nums.end(),0ll);
-        int n=nums.size();
-        nums.insert(nums.end(),nums.begin(),nums.end());
-        ll ans=LONG_MAX;
-        // cout<<x;
-        
-        if(x==target)
-        ans = n;
-        else if(x>target)
-        ans= f(nums,target);
-        else{
-        ans = n*(target/x)+f(nums,target%x);
-        // cout<<target%x;
-        // cout<<target/x;
-        }
-        // return f(nums,target);
-        return ans>=INT_MAX?-1:ans;
+        if (sz == 2 * n + 1)
+            return -1;
+        else
+           return (tot * n + sz);
     }
 };
