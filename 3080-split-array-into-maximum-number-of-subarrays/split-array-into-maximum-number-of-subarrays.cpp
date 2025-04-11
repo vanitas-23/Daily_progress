@@ -1,24 +1,18 @@
 class Solution {
 public:
-
- int maxSubarrays(vector<int>& nums) {
-    int n=nums.size();
-    int cnt=0, andd=nums[0];  
-	
-    for(int i=0; i<n; i++){ 
-        andd&=nums[i];
-        if(i==n-1){
-            // andd&=nums[i];
-            break;
+    int maxSubarrays(vector<int>& nums) {
+        int a=INT_MAX;
+        for(auto it:nums)a&=it;
+        if(a!=0)return 1;
+        int b=INT_MAX;
+        int count=0;
+        for(auto it:nums){
+            b&=it;
+            if(b==0){
+                count++;
+                b=INT_MAX;
+            }
         }
-        
-        if(andd==0){ 
-            cnt++;
-            andd=nums[i+1];
-        }
+        return count;
     }
-   
-    if(andd==0 || cnt==0) cnt++;
-    return cnt;  
-  }
 };
