@@ -9,7 +9,7 @@ public:
         n=nums.size();
         for(int i=1;i<n;i++)
         nums[i]+=nums[i-1];
-        unordered_map<int,int>mp;
+        map<int,int>mp;
         int ans=m+1;
         for(int i=0;i<n;i++)
         {
