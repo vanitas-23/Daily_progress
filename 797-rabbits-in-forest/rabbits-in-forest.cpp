@@ -2,7 +2,7 @@ class Solution {
 public:
     int numRabbits(vector<int>& ans) {
         int res=0;
-        map<int,int>mp;
+        unordered_map<int,int>mp;
         for(auto i:ans)
         {
             if(mp.find(i)==mp.end())
