@@ -2,11 +2,9 @@ class TrieNode {
 public:
     TrieNode* children[2] = {nullptr, nullptr};
 };
-
 class Trie {
 public:
     TrieNode* root = new TrieNode();
-    
     void insert(string word) {
         TrieNode* node = root;
         for (char c : word) {
@@ -17,7 +15,6 @@ public:
             node = node->children[bit];
         }
     }
-    
     int get(string val) {
         int ans = 0;
         TrieNode* node = root;
