@@ -1,36 +1,23 @@
 class Solution {
 public:
-    int minDominoRotations(vector<int>& tops, vector<int>& bottoms) {
-        unordered_map<int,int>mp1,mp2;
+    int f(vector<int>& tops, vector<int>& bts,int curr)
+    {
         int n=tops.size();
+        int ans=0;
+        for(int i=0;i<n;i++)
+        {
+            if(tops[i]==curr) continue;
+            if(bts[i]!=curr)
+            return 1e9;
+            ans++;
+        }
+        return ans;
+    }
+    int minDominoRotations(vector<int>& tops, vector<int>& bts) {
+        int ans=1e9;
+        for(int i=1;i<=6;i++)
+        ans=min({ans,f(tops,bts,i),f(bts,tops,i)});
         
-        for(int i=0;i<n;i++)
-        {
-            mp1[tops[i]]++;
-            if(tops[i]!=bottoms[i])
-            mp2[bottoms[i]]++;
-        }
-        int ans=n+1;
-        for(int i=0;i<n;i++)
-        {
-            if(mp1[tops[i]]+mp2[tops[i]]>=n)
-            ans=min(ans,min(mp1[tops[i]],mp2[tops[i]]));
-        }
-        mp1.clear();
-        mp2.clear();
-        swap(tops,bottoms);
-        for(int i=0;i<n;i++)
-        {
-            mp1[tops[i]]++;
-            if(tops[i]!=bottoms[i])
-            mp2[bottoms[i]]++;
-        }
-       // int ans=n+1;
-        for(int i=0;i<n;i++)
-        {
-            if(mp1[tops[i]]+mp2[tops[i]]>=n)
-            ans=min(ans,min(mp1[tops[i]],mp2[tops[i]]));
-        }
-        return ans==n+1?-1:ans;
+        return ans==1e9?-1:ans;
     }
 };
