@@ -21,7 +21,7 @@ public:
                 vac2++;
         
         long long low=1;
-        long long high=1e18;
+        long long high=1e12;
         if(vac1==0)
         high=sum1;
         else if(vac2==0)
