@@ -1,34 +1,31 @@
 class Solution {
 public:
     int findKthNumber(int n, int k) {
-        int currentPrefix = 1;
-        --k;  // Decrement k to handle zero-based indexing
-        
+        int curr = 1;
+        k--;
+
         while (k > 0) {
-            int count = countNumbersWithPrefix(currentPrefix, n);
-            if (k >= count) {
-                ++currentPrefix;  // Move to the next prefix
-                k -= count;
+            int step = countSteps(n, curr, curr + 1);
+            if (step <= k) {
+                curr++;
+                k -= step;
             } else {
-                currentPrefix *= 10;  // Go deeper in the current prefix
-                --k;
+                curr *= 10;
+                k--;
             }
         }
-        
-        return currentPrefix;
+
+        return curr;
     }
 
 private:
-    int countNumbersWithPrefix(int prefix, int n) {
-        long long firstNumber = prefix, nextNumber = prefix + 1;
-        int totalCount = 0;
-
-        while (firstNumber <= n) {
-            totalCount += static_cast<int>(min(n + 1LL, nextNumber) - firstNumber);
-            firstNumber *= 10;
-            nextNumber *= 10;
+    int countSteps(int n, long prefix1, long prefix2) {
+        int steps = 0;
+        while (prefix1 <= n) {
+            steps += min((long)(n + 1), prefix2) - prefix1;
+            prefix1 *= 10;
+            prefix2 *= 10;
         }
-
-        return totalCount;
+        return steps;
     }
 };
