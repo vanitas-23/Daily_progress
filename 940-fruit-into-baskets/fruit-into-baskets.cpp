@@ -1,30 +1,23 @@
 class Solution {
 public:
-    int totalFruit(vector<int>& fruits) {
-        int n=fruits.size();
+    int totalFruit(vector<int>& nums) {
         int ans=0;
-        int basket[2]={-1, -1}, cnt[2]={0, 0};
-        int lastRun=0; // consecutive count of basket[1]
-
-        for (int i=0; i<n; i++) {
-            int x=fruits[i];
-            if (x==basket[1]) {
-                cnt[1]++;
-                lastRun++;
-            } 
-            else if (x==basket[0]) {
-                swap(basket[0], basket[1]);
-                swap(cnt[0], cnt[1]);
-                cnt[1]++;
-                lastRun=1;
-            } 
-            else { 
-                //other type from the ones in baskets
-                basket[0]=exchange(basket[1], x);
-                cnt[0]=exchange(lastRun, 1);
-                cnt[1]=1;
+        unordered_map<int,int>mp;
+        int i=0;
+        int j=0;
+        int n=nums.size();
+        while(j<n)
+        {
+            mp[nums[j]]++;
+            while(mp.size()>2)
+            {
+                mp[nums[i]]--;
+                if(mp[nums[i]]==0)
+                mp.erase(nums[i]);
+                i++;
             }
-            ans=max(ans, cnt[0]+cnt[1]);
+            ans=max(ans,j-i+1);
+            j++;
         }
         return ans;
     }
