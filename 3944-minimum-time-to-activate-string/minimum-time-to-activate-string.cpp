@@ -3,8 +3,11 @@ class Solution {
 public:
     bool f(string s,int mid,vector<int>& order,ll k,int n)
     {
-        for(int i=0;i<mid && i<n ;i++)
-        s[order[i]]='*';
+        for(int i=0;i<=mid;i++)
+        {
+
+            s[order[i]]='*';
+        }
         int left=0;
         int right=n-1;
         for(int i=0;i<n;i++)
@@ -26,12 +29,14 @@ public:
     }
     int minTime(string s, vector<int>& order, int k) {
         int n=s.size();
-        int l=1;
-        int r=n;
+        int l=0;
+        int r=n-1;
         int ans=n+1;
         while(l<=r)
         {
-            int mid=(r-(r-l)/2);
+            int mid=r-(r-l)/2;
+            //cout<<mid<<" ";
+            cout<<l<<" "<<r<<" "<<mid<<endl;
             if(f(s,mid,order,k,n))
             {
                 ans=mid;
@@ -40,7 +45,6 @@ public:
             else
             l=mid+1;
         }
-        f(s,2,order,k,n);
-        return ans==(n+1)?-1:ans-1;
+        return ans==(n+1)?-1:ans;
     }
 };
