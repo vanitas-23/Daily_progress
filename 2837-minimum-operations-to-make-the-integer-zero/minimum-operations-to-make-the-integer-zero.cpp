@@ -1,13 +1,11 @@
 class Solution {
 public:
-    int makeTheIntegerZero(int num1, int num2) {
-        if(num1 <= num2)
-            return -1;  
-        for(int k=1;k<=32;k++){
-            long diff = num1 - ((long)num2 * k);
-            int min_cnt = __builtin_popcountl(diff); 
-            if(k >= min_cnt && k <= diff)
-                return k;
+    int makeTheIntegerZero(int n1, int n2) {
+        for(int k=1;k<=32;k++)
+        {
+            if(1ll*n1-k*1ll*n2<=0) break;
+            if(__builtin_popcountl(1ll*n1-k*1ll*n2)<=k && k<=(1ll*n1-k*1ll*n2))
+            return k;
         }
         return -1;
     }
