@@ -1,8 +1,8 @@
 class TaskManager {
 public:
     map<int, set<int>> p2t;
-    map<int, int> t2p;
-    map<int, int> t2u;
+    unordered_map<int, int> t2p;
+    unordered_map<int, int> t2u;
     TaskManager(vector<vector<int>>& tasks) {
         //cout<<"tt"<<endl;
         for (auto i : tasks) {
@@ -39,13 +39,10 @@ public:
     }
 
     int execTop() {
-        
         if (p2t.size() == 0)
             return -1;
         auto it = prev(p2t.end()); 
-        
         int ans = t2u[*prev(it->second.end())];
-        
         it->second.erase(prev(it->second.end()));
         if (it->second.empty())
             p2t.erase(it);
